@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { z } from 'zod';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -17,14 +18,22 @@ export default function LoginForm() {
     password: '',
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const validation = loginSchema.safeParse(loginDetails);
     if (!validation.success) {
       toast.error(validation.error.errors[0].message);
       return;
     }
     console.log('Login Details:', loginDetails);
-    toast.success('Login successful!');
+    try {
+      const response = await axios.post("/api/users/login", loginDetails);
+      console.log("Login success", response.data);
+      toast.success("Login successful");
+      router.push("/");
+    } catch (error) {
+      console.log("Login failed", error.message);
+      toast.error(error.message);
+    }
   };
 
   return (

@@ -104,50 +104,55 @@ export default function RegistrationForm() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-white shadow-md rounded-md mt-10">
+    <div className="bg-gray-800 py-10">
+      <div className="max-w-2xl mx-auto p-8 bg-gray-200 shadow-2xl rounded-md py-10">
       <ToastContainer />
       {step === 1 && (
         <div>
-          <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">User Details</h2>
+          <h2 className="text-3xl font-semibold text-black mb-6 mt-2 text-center">User Details</h2>
           <form>
             <div className="mb-6">
-              <label className="block text-gray-700 font-medium mb-2">Name</label>
+              <label className="block text-black font-medium mb-2">Name</label>
               <input
                 type="text"
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={userDetails.name}
+                placeholder='Enter your name'
                 onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
               />
             </div>
             <div className="mb-6">
-              <label className="block text-gray-700 font-medium mb-2">Email</label>
+              <label className="block text-black font-medium mb-2">Email</label>
               <input
                 type="email"
+                placeholder='Enter your email'
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={userDetails.email}
                 onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
               />
             </div>
             <div className="mb-6">
-              <label className="block text-gray-700 font-medium mb-2">Phone</label>
+              <label className="block text-black font-medium mb-2">Phone</label>
               <input
                 type="text"
+                placeholder='Enter your phone number'
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={userDetails.phone}
                 onChange={(e) => setUserDetails({ ...userDetails, phone: e.target.value })}
               />
             </div>
             <div className="mb-6">
-              <label className="block text-gray-700 font-medium mb-2">Password</label>
+              <label className="block text-black font-medium mb-2">Password</label>
               <input
                 type="password"
+                placeholder='Enter a password'
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={userDetails.password}
                 onChange={(e) => setUserDetails({ ...userDetails, password: e.target.value })}
               />
             </div>
             <div className="mb-6">
-              <label className="block text-gray-700 font-medium mb-2">Country</label>
+              <label className="block text-black font-medium mb-2">Country</label>
               <CountryDropdown
                 value={userDetails.country}
                 onChange={(val) => setUserDetails({ ...userDetails, country: val, state: '', city: '' })}
@@ -155,7 +160,7 @@ export default function RegistrationForm() {
               />
             </div>
             <div className="mb-6">
-              <label className="block text-gray-700 font-medium mb-2">State</label>
+              <label className="block text-black font-medium mb-2">State</label>
               <RegionDropdown
                 country={userDetails.country}
                 value={userDetails.state}
@@ -164,9 +169,10 @@ export default function RegistrationForm() {
               />
             </div>
             <div className="mb-6">
-              <label className="block text-gray-700 font-medium mb-2">City</label>
+              <label className="block text-black font-medium mb-2">City</label>
               <input
                 type="text"
+                placeholder='Enter your city'
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={userDetails.city}
                 onChange={(e) => setUserDetails({ ...userDetails, city: e.target.value })}
@@ -188,39 +194,43 @@ export default function RegistrationForm() {
       )}
       {step === 2 && (
         <div>
-          <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">Dog Details</h2>
+          <h2 className="text-3xl font-semibold text-black mb-6 text-center">Dog Details</h2>
           <form>
             <div className="mb-6">
-              <label className="block text-gray-700 font-medium mb-2">Dog Name</label>
+              <label className="block text-black font-medium mb-2">Dog Name</label>
               <input
                 type="text"
+                placeholder='Enter your dog name'
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={dogDetails.dogName}
                 onChange={(e) => setDogDetails({ ...dogDetails, dogName: e.target.value })}
               />
             </div>
             <div className="mb-6">
-              <label className="block text-gray-700 font-medium mb-2">Breed</label>
+              <label className="block text-black font-medium mb-2">Breed</label>
               <input
                 type="text"
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={dogDetails.breed}
+                placeholder='Enter your dog breed'
                 onChange={(e) => setDogDetails({ ...dogDetails, breed: e.target.value })}
               />
             </div>
             <div className="mb-6">
-              <label className="block text-gray-700 font-medium mb-2">Age</label>
+              <label className="block text-black font-medium mb-2">Age (in months)</label>
               <input
                 type="text"
+                placeholder='Enter your dog age'
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={dogDetails.age}
                 onChange={(e) => setDogDetails({ ...dogDetails, age: e.target.value })}
               />
             </div>
             <div className="mb-6">
-              <label className="block text-gray-700 font-medium mb-2">Gender</label>
+              <label className="block text-black font-medium mb-2">Gender</label>
               <input
                 type="text"
+                placeholder='Enter your dog gender'
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={dogDetails.gender}
                 onChange={(e) => setDogDetails({ ...dogDetails, gender: e.target.value })}
@@ -245,6 +255,7 @@ export default function RegistrationForm() {
           </form>
         </div>
       )}
+    </div>
     </div>
   );
 }

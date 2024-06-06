@@ -6,13 +6,13 @@ import jwt from "jsonwebtoken";
 
 export async function POST(req: NextRequest) {
     try {
-        console.log("Connecting to the database...");
+        // console.log("Connecting to the database...");
         await connect();
-        console.log("Connected to the database.");
+        // console.log("Connected to the database.");
 
         const reqBody = await req.json();
         const { email, password } = reqBody;
-        console.log("Request body:", reqBody);
+        // console.log("Request body:", reqBody);
 
         // Check if email and password are provided
         if (!email || !password) {
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
 
         response.cookies.set("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // Ensure cookie is secure in production
+            secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
             path: "/",
         });
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
         console.log("Response prepared. Sending response...");
         return response;
     } catch (error: any) {
-        console.error("Error during login:", error); // Detailed error logging
+        console.error("Error during login:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }

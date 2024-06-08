@@ -1,14 +1,29 @@
 "use client";
-import Link from 'next/link';
-import { useState } from 'react';
 
-const isLogedIn = false;
+import Link from 'next/link';
+import { useState, useContext, useEffect } from 'react';
+import { GlobalContext } from '@/context';
+import { FaRegUserCircle } from "react-icons/fa";
+import Cookies from "js-cookie"
 
 export default function CustomNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const { isAuthUser, logout } = useContext(GlobalContext);
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
+    setIsProfileOpen(false);
+  };
+
+  const handleProfileToggle = () => {
+    setIsProfileOpen(!isProfileOpen);
+  };
+
+  const handleLogout = () => {
+    Cookies.remove('token');
+    logout();
+    setIsMenuOpen(false);
   };
 
   return (
@@ -18,35 +33,39 @@ export default function CustomNavbar() {
           <div className="flex items-center">
             <Link href="/" className="text-2xl font-bold text-indigo-900">DogCare</Link>
           </div>
-          <div className="hidden md:flex items-center space-x-7">
+          <div className="hidden md:flex items-center space-x-6">
             <Link href="/services/adoption" className="text-gray-800 hover:text-indigo-600">Adoption</Link>
             <Link href="/services/daycare" className="text-gray-800 hover:text-indigo-600">Daycare</Link>
             <Link href="/services/training" className="text-gray-800 hover:text-indigo-600">Training</Link>
             <Link href="/services/veterinary" className="text-gray-800 hover:text-indigo-600">Veterinary</Link>
-            {isLogedIn ? (
+            {isAuthUser ? (
               <div className="relative group">
-                <button className="text-gray-800 hover:text-indigo-600 focus:outline-none">
-                  Account
+                <button className="text-gray-800 hover:text-indigo-600 focus:outline-none mt-1.5" onClick={handleProfileToggle}>
+                  <FaRegUserCircle size={30} />
                 </button>
-                <div className="absolute hidden group-hover:block bg-white shadow-lg rounded mt-2">
-                  <Link href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</Link>
-                  <Link href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</Link>
-                </div>
+                {isProfileOpen && (
+                  <div className="absolute bg-white shadow-lg rounded mt-2 mr-4">
+                    <Link href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</Link>
+                    <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLogout}>Logout</button>
+                  </div>
+                )}
               </div>
             ) : (
               <Link href="/register" className="text-gray-800 hover:text-indigo-600 border border-indigo-600 px-3 py-1 rounded-2xl">Sign up</Link>
             )}
           </div>
           <div className="md:hidden flex items-center space-x-3">
-            {isLogedIn ? (
+            {isAuthUser ? (
               <div className="relative group">
-                <button className="text-gray-800 hover:text-indigo-600 focus:outline-none">
-                  Account
+                <button className="text-gray-800 hover:text-indigo-600 focus:outline-none mt-1" onClick={handleProfileToggle}>
+                  <FaRegUserCircle size={28} />
                 </button>
-                <div className="absolute hidden group-hover:block bg-white shadow-lg rounded mt-2">
-                  <Link href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</Link>
-                  <Link href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</Link>
-                </div>
+                {isProfileOpen && (
+                  <div className="absolute bg-white shadow-lg rounded mt-2">
+                    <Link href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</Link>
+                    <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLogout}>Logout</button>
+                  </div>
+                )}
               </div>
             ) : (
               <Link href="/register" className="text-gray-800 hover:text-indigo-600 border border-indigo-600 px-3 py-1 rounded-2xl">Sign up</Link>
@@ -80,17 +99,11 @@ export default function CustomNavbar() {
             <Link href="/services/daycare" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-indigo-600 hover:bg-gray-100">Daycare</Link>
             <Link href="/services/training" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-indigo-600 hover:bg-gray-100">Training</Link>
             <Link href="/services/veterinary" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-indigo-600 hover:bg-gray-100">Veterinary</Link>
-            {isLogedIn ? (
-              <>
-                <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-indigo-600 hover:bg-gray-100">Profile</Link>
-                <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-indigo-600 hover:bg-gray-100">Logout</Link>
-              </>
-            ) : (
-              <Link href="/register" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-indigo-600 hover:bg-gray-100">Sign up</Link>
-            )}
           </div>
         </div>
       )}
     </nav>
   );
 }
+
+

@@ -1,19 +1,24 @@
 "use client";
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { z } from 'zod';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { useRouter } from 'next/navigation';
+import { GlobalContext } from "@/context";
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters long'),
 });
 
+
 export default function LoginForm() {
+
+  const { login, setUser } = useContext(GlobalContext);
+
   const [loginDetails, setLoginDetails] = useState({
     email: '',
     password: '',
@@ -31,7 +36,9 @@ export default function LoginForm() {
     console.log('Login Details:', loginDetails);
     try {
       const response = await axios.post("/api/users/login", loginDetails);
-      console.log("Login success", response.data);
+      const userData = response.data.user;
+      console.log("Login success", userData);
+      setUser(response.data.user);
       toast.success("Login successful");
       router.push("/");
     } catch (error) {

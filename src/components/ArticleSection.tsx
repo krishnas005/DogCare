@@ -2,10 +2,9 @@
 import Link from 'next/link';
 
 const articles = [
-    { title: 'The Importance of Regular Vet Visits', summary: 'Learn why regular veterinary checkups are crucial for your dog’s health and wellbeing.', link: '/articles/vet-visits', image: '/vet-visits.jpg' },
-    { title: 'Top 10 Dog Training Tips', summary: 'Discover effective dog training tips to ensure a well-behaved furry friend.', link: '/articles/dog-training-tips', image: '/dog-training.jpg' },
-    { title: 'Healthy Diet for Dogs', summary: 'Understand the components of a healthy diet and how to provide balanced nutrition for your dog.', link: '/articles/healthy-diet', image: '/healthy-diet.jpg' },
-    // Add more articles as needed
+    { id: 1, title: 'The Importance of Regular Vet Visits', summary: 'Learn why regular veterinary checkups are crucial for your dog’s health and wellbeing.', link: '/articles/vet-visits', image: '/vet-visits.jpg' },
+    { id: 2, title: 'Top 10 Dog Training Tips', summary: 'Discover effective dog training tips to ensure a well-behaved furry friend.', link: '/articles/dog-training-tips', image: '/dog-training.jpg' },
+    { id: 3, title: 'Healthy Diet for Dogs', summary: 'Understand the components of a healthy diet and how to provide balanced nutrition for your dog.', link: '/articles/healthy-diet', image: '/healthy-diet.jpg' },
 ];
 
 export default function ArticleSection() {

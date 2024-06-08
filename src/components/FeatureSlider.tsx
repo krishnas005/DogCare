@@ -8,12 +8,6 @@ import Image from 'next/image';
 
 const features = [
   {
-    title: 'Adoption',
-    description: 'Connect with pets in need of loving homes.',
-    link: '/services/adoption',
-    image: '/adoption.jpg'
-  },
-  {
     title: 'Daycare',
     description: 'Safe and fun daycare for your pets.',
     link: '/services/daycare',
@@ -24,6 +18,12 @@ const features = [
     description: 'Professional training for your pets.',
     link: '/services/training',
     image: '/training.jpg'
+  },
+  {
+    title: 'Adoption',
+    description: 'Connect with pets in need of loving homes.',
+    link: '#',
+    image: '/adoption.jpg'
   },
   {
     title: 'Veterinary',

@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function BuySell() {
     return (
         <div>
-            <div className="relative bg-gray-800 overflow-hidden min-h-[300px] max-h-[600px]">
+            <div className="relative bg-gray-800 overflow-hidden min-h-screen max-h-[600px]">
                 <div className="absolute inset-y-0 right-0 w-1/2 hidden lg:block">
                     <Image
                         className="ml-[120px] mt-[130px] border rounded-md"

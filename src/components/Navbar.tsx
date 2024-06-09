@@ -46,7 +46,7 @@ export default function CustomNavbar() {
                 </button>
                 {isProfileOpen && (
                   <div className="absolute bg-white shadow-lg rounded mt-2 -ml-8 z-10">
-                    <Link href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</Link>
+                    <Link href="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</Link>
                     <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLogout}>Logout</button>
                   </div>
                 )}
@@ -63,7 +63,7 @@ export default function CustomNavbar() {
                 </button>
                 {isProfileOpen && (
                   <div className="absolute bg-white shadow-lg rounded mt-2">
-                    <Link href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</Link>
+                    <Link href="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</Link>
                     <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLogout}>Logout</button>
                   </div>
                 )}

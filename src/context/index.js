@@ -10,6 +10,7 @@ export const GlobalContext = createContext(null);
 export const GlobalProvider = ({ children }) => {
     
     const [user, setUser] = useState(null);
+    const [pet, setPet] = useState(null);
     const [isAuthUser, setIsAuthUser] = useState(false);
 
     const login = (userData) => {
@@ -29,7 +30,11 @@ export const GlobalProvider = ({ children }) => {
             setIsAuthUser(true);
             console.log("Context true: ", Cookies.get('token'))
             const userData = JSON.parse(localStorage.getItem('user')) || {};
+            const petData = JSON.parse(localStorage.getItem('pet')) || {};
+            console.log("Context user data: ", userData)
+            console.log("Context pet data: ", petData)
             setUser(userData);
+            setPet(petData)
         } else {
             console.log("Context false: ", Cookies.get('token'))
             setIsAuthUser(false);
@@ -37,8 +42,9 @@ export const GlobalProvider = ({ children }) => {
         }
     },[Cookies])
 
+
     return (
-        <GlobalContext.Provider value={{ user, setUser, isAuthUser, setIsAuthUser, login, logout }}>
+        <GlobalContext.Provider value={{ user, setUser, pet, setPet, isAuthUser, setIsAuthUser, login, logout }}>
             {children}
         </GlobalContext.Provider>
     );

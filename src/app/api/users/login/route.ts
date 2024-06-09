@@ -47,15 +47,11 @@ export async function POST(req: NextRequest) {
         // Fetch pet details for the user
         const pets = await Pet.find({ _id: { $in: userExists.pets } });
         console.log("Pets of user: ", pets)
-        // Prepare response data with user and pet details
+        
         const finalData = {
             tokenData,
-            user: {
-                email: userExists.email,
-                name: userExists.name,
-                _id: userExists._id,
-                pets: pets,
-            },
+            user: userExists,
+            pet: pets
         };
 
         const response = NextResponse.json({

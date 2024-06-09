@@ -37,8 +37,10 @@ export default function LoginForm() {
     try {
       const response = await axios.post("/api/users/login", loginDetails);
       const userData = response.data.user;
-      console.log("Login success", userData);
-      setUser(response.data.user);
+      console.log("user: ", userData);
+      setUser(userData);
+      localStorage.setItem('user', JSON.stringify(userData.user))
+      localStorage.setItem('pet', JSON.stringify(userData.pet))
       toast.success("Login successful");
       router.push("/");
     } catch (error) {

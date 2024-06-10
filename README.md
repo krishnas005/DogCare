@@ -1,6 +1,4 @@
-<div style="text-align: center; font-weight: bold; font-size: 24px;">
-  DogCare
-</div>
+# DogCare
 
 Welcome to the DogCare website! This project aims to provide valuable information and resources for dog owners to care for their beloved pets. With a focus on promoting responsible pet ownership and ensuring the health and well-being of dogs, DogCare offers a range of features and functionalities.
 

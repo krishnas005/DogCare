@@ -12,6 +12,7 @@ export const GlobalProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [pet, setPet] = useState(null);
     const [isAuthUser, setIsAuthUser] = useState(false);
+    const [messages, setMessages] = useState([]);
 
     const login = (userData) => {
         setIsAuthUser(true);
@@ -42,9 +43,21 @@ export const GlobalProvider = ({ children }) => {
         }
     },[Cookies])
 
+    useEffect(() => {
+        const fetchMessages = async () => {
+            try {
+                const response = await axios.get('/api/messages');
+                setMessages(response.data.messages);
+            } catch (error) {
+                console.error("Failed to fetch messages:", error);
+            }
+        };
+        fetchMessages();
+    }, []);
+
 
     return (
-        <GlobalContext.Provider value={{ user, setUser, pet, setPet, isAuthUser, setIsAuthUser, login, logout }}>
+        <GlobalContext.Provider value={{ user, setUser, pet, setPet, isAuthUser, setIsAuthUser, login, logout, messages, setMessages }}>
             {children}
         </GlobalContext.Provider>
     );

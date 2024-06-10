@@ -9,6 +9,7 @@ import ArticleSection from '@/components/ArticleSection';
 import PetCare from '@/components/PetCare';
 import NGOFinder from '@/components/NGOFinder';
 import Footer from '@/components/Footer';
+import EmailSection from '@/components/Feedback';
 
 const Home = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -41,17 +42,18 @@ const Home = () => {
       {showScrollButton && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-4 right-4 bg-gray-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-gray-600 transition-all duration-300 z-50"
+          className="fixed bottom-5 right-5 bg-gray-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-gray-600 transition-all duration-300 z-50"
         >
           <FontAwesomeIcon icon={faArrowUp} />
         </button>
       )}
-
+      
       <BuySell />
       <FeatureSlider />
       <NGOFinder />
       <PetCare />
       <ArticleSection />
+      <EmailSection />
       <Footer />
     </div>
   );

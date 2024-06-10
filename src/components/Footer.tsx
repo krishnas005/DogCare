@@ -4,9 +4,9 @@ import { FaLinkedin, FaEnvelope, FaGlobe } from 'react-icons/fa';
 
 export default function Footer() {
     return (
-        <footer className="bg-gray-800 pb-4 pt-10">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <footer className="bg-gray-800 pb-4 ">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <h3 className="md:text-lg text-md font-bold text-white mb-4">Contact Information</h3>
                         <ul className="text-gray-400 md:text-md text-xs">
@@ -28,8 +28,8 @@ export default function Footer() {
                         <h3 className="md:text-xl text-lg font-bold text-white mb-4">About DogCare</h3>
                         <p className="text-gray-400 md:text-md text-xs">DogCare is dedicated to providing resources and services for the well-being of dogs. Our mission is to promote responsible pet ownership and support organizations that work for the welfare of stray dogs. Stay tuned for more services.</p>
                     </div>
-                </div>
-                <div className="mt-4 text-center text-gray-400 md:text-md text-xs">
+                </div> */}
+                <div className="text-center text-gray-400 md:text-md text-xs">
                     <p>&copy; {new Date().getFullYear()} DogCare. All rights reserved.</p>
                 </div>
             </div>

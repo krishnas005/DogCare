@@ -6,7 +6,7 @@ export default function PetCare() {
         <div className="bg-gray-800 py-28">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center gap-10">
                 <div className="flex-1 text-white">
-                    <h2 className="text-4xl font-bold text-white mb-6 text-center sm:text-left">Basic Pet Care Tips</h2>
+                    <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400  to-pink-500 mb-6 text-center sm:text-left">Basic Pet Care Tips</h2>
                     <p className="text-lg text-gray-200 mb-4">
                         Learn the basics of pet care, including the importance of vaccinations, regular check-ups, and proper nutrition.
                     </p>

@@ -22,7 +22,7 @@ const EmailSection = () => {
 
         emailjs
             .sendForm('service_5ckk1xm', 'template_ade6mdh', form.current, {
-                publicKey: 'by8y0qWhlN693Sblj',
+                publicKey: "by8y0qWhlN693Sblj",
             })
             .then(
                 () => {
@@ -41,7 +41,7 @@ const EmailSection = () => {
                     });
                 },
                 (error) => {
-                    console.log('FAILED...', error.text);
+                    console.log('FAILED SENDING MESSAGE', error.text);
                 },
             );
     };
@@ -61,15 +61,15 @@ const EmailSection = () => {
                     <span className="block">Provide us with your valuable feedback!</span>
                 </p>
                 <div className="socials flex flex-row gap-4">
-                    <Link className="w-10" href="https://linkedin.com/in/krishna-sharma-8665a024b">
+                    <Link className="w-10" href="https://linkedin.com/in/krishnas05">
                         <Image src={LinkedinIcon} alt="Linkedin Icon" />
                     </Link>
                     <Link className="w-10" href="https://github.com/krishnas005">
                         <Image src={GithubIcon} alt="Github Icon" />
                     </Link>
-                    <Link className="w-9" href="https://leetcode.com/krishnas05/">
+                    {/* <Link className="w-9" href="https://leetcode.com/krishnas05/">
                         <Image src={LeetcodeIcon} alt="Leetcode Icon" />
-                    </Link>
+                    </Link> */}
                     <Link href="https://krishnas05.vercel.app/" className="text-white mt-1">
                     <FaGlobe size={30}/>
                     </Link>

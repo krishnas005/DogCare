@@ -4,15 +4,19 @@
 
 import { createContext, useState, useEffect } from 'react';
 import Cookies from "js-cookie";
+import {useRouter} from 'next/navigation';
 
 export const GlobalContext = createContext(null);
 
 export const GlobalProvider = ({ children }) => {
+
+    const router = useRouter();
     
     const [user, setUser] = useState(null);
     const [pet, setPet] = useState(null);
     const [isAuthUser, setIsAuthUser] = useState(false);
     const [messages, setMessages] = useState([]);
+    const [token, setToken] = useState(null);
 
     const login = (userData) => {
         setIsAuthUser(true);
@@ -29,11 +33,13 @@ export const GlobalProvider = ({ children }) => {
         // console.log("document: ", document.cookie)
         if(Cookies.get('token') !== undefined) {
             setIsAuthUser(true);
+            // window.location.reload()
             console.log("Context true: ", Cookies.get('token'))
             const userData = JSON.parse(localStorage.getItem('user')) || {};
             const petData = JSON.parse(localStorage.getItem('pet')) || {};
             console.log("Context user data: ", userData)
             console.log("Context pet data: ", petData)
+            setToken(Cookies.get('token'))
             setUser(userData);
             setPet(petData)
         } else {
@@ -57,7 +63,7 @@ export const GlobalProvider = ({ children }) => {
 
 
     return (
-        <GlobalContext.Provider value={{ user, setUser, pet, setPet, isAuthUser, setIsAuthUser, login, logout, messages, setMessages }}>
+        <GlobalContext.Provider value={{ user, setUser, pet, setPet, isAuthUser, setIsAuthUser, login, logout, messages, setMessages, token }}>
             {children}
         </GlobalContext.Provider>
     );

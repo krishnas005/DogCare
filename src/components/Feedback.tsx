@@ -1,15 +1,14 @@
 "use client"
 
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import GithubIcon from "../assets/github-icon.svg";
 import LinkedinIcon from "../assets/linkedin-icon.svg";
-import LeetcodeIcon from "../assets/leetcode-svgrepo-com.svg";
 import Link from "next/link";
 import Image from "next/image";
 import emailjs from '@emailjs/browser';
 import { toast, ToastContainer } from 'react-toastify';
 import { Bounce } from 'react-toastify';
-import { FaLinkedin, FaEnvelope, FaGlobe } from 'react-icons/fa';
+import { FaGlobe } from 'react-icons/fa';
 
 
 import 'react-toastify/dist/ReactToastify.css';

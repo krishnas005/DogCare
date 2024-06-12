@@ -2,14 +2,18 @@
 
 import Link from 'next/link';
 import { useState, useContext, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { GlobalContext } from '@/context';
 import { FaRegUserCircle } from "react-icons/fa";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
+import {useRouter} from 'next/navigation'
 
 export default function CustomNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const { isAuthUser, logout } = useContext(GlobalContext);
+  const pathname = usePathname();
+  const router = useRouter();
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -22,9 +26,13 @@ export default function CustomNavbar() {
 
   const handleLogout = () => {
     Cookies.remove('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('pet');
     logout();
     setIsMenuOpen(false);
   };
+
+  
 
   return (
     <nav className="bg-white shadow-lg">
@@ -34,7 +42,6 @@ export default function CustomNavbar() {
             <Link href="/" className="text-2xl font-bold text-indigo-900">DogCare</Link>
           </div>
           <div className="hidden md:flex items-center space-x-6">
-            {/* <Link href="/services/adoption" className="text-gray-800 hover:text-indigo-600">Adoption</Link> */}
             <Link href="/services/daycare" className="text-gray-800 hover:text-indigo-600">Daycare</Link>
             <Link href="/services/training" className="text-gray-800 hover:text-indigo-600">Training</Link>
             <Link href="/services/veterinary" className="text-gray-800 hover:text-indigo-600">Veterinary</Link>
@@ -52,7 +59,11 @@ export default function CustomNavbar() {
                 )}
               </div>
             ) : (
-              <Link href="/register" className="text-gray-800 hover:text-indigo-600 border border-indigo-600 px-3 py-1 rounded-2xl">Sign up</Link>
+              pathname === '/login' ? (
+                <Link href="/register" className="text-gray-800 hover:text-indigo-600 border border-indigo-600 px-3 py-1 rounded-2xl">Sign Up</Link>
+              ) : (
+                <Link href="/login" className="text-gray-800 hover:text-indigo-600 border border-indigo-600 px-3 py-1 rounded-2xl">Login</Link>
+              )
             )}
           </div>
           <div className="md:hidden flex items-center space-x-3">
@@ -69,7 +80,11 @@ export default function CustomNavbar() {
                 )}
               </div>
             ) : (
-              <Link href="/register" className="text-gray-800 hover:text-indigo-600 border border-indigo-600 px-3 py-1 rounded-2xl">Sign up</Link>
+              pathname === '/login' ? (
+                <Link href="/register" className="text-gray-800 hover:text-indigo-600 border border-indigo-600 px-3 py-1 rounded-2xl">Sign Up</Link>
+              ) : (
+                <Link href="/login" className="text-gray-800 hover:text-indigo-600 border border-indigo-600 px-3 py-1 rounded-2xl">Login</Link>
+              )
             )}
             <button
               onClick={handleMenuToggle}
@@ -96,7 +111,6 @@ export default function CustomNavbar() {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {/* <Link href="/services/adoption" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-indigo-600 hover:bg-gray-100">Adoption</Link> */}
             <Link href="/services/daycare" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-indigo-600 hover:bg-gray-100">Daycare</Link>
             <Link href="/services/training" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-indigo-600 hover:bg-gray-100">Training</Link>
             <Link href="/services/veterinary" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-indigo-600 hover:bg-gray-100">Veterinary</Link>
@@ -107,5 +121,3 @@ export default function CustomNavbar() {
     </nav>
   );
 }
-
-

@@ -1,6 +1,6 @@
 # DogCare
 
-Welcome to the DogCare website! This project aims to provide valuable information and resources for dog owners to care for their beloved pets. With a focus on promoting responsible pet ownership and ensuring the health and well-being of dogs, DogCare offers a range of features and functionalities.
+Welcome to the DogCare website! This project aims to provide valuable information and resources for dog owners to care for their beloved pets. With a focus on promoting responsible pet ownership and ensuring the health and well-being of dogs, In this website we offers a range of features and functionalities.
 
 ## Features:
 1. User Authentication: Users can create accounts and log in to access personalized content and features.

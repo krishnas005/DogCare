@@ -49,17 +49,17 @@ export const GlobalProvider = ({ children }) => {
         }
     },[Cookies])
 
-    useEffect(() => {
-        const fetchMessages = async () => {
-            try {
-                const response = await axios.get('/api/messages');
-                setMessages(response.data.messages);
-            } catch (error) {
-                console.error("Failed to fetch messages:", error);
-            }
-        };
-        fetchMessages();
-    }, []);
+    // useEffect(() => {
+    //     const fetchMessages = async () => {
+    //         try {
+    //             const response = await axios.get('/api/messages');
+    //             setMessages(response.data.messages);
+    //         } catch (error) {
+    //             console.error("Failed to fetch messages:", error);
+    //         }
+    //     };
+    //     fetchMessages();
+    // }, []);
 
 
     return (

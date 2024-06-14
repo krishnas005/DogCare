@@ -90,7 +90,7 @@ export default function RegistrationForm() {
       });
 
       const data = await response.json();
-      console.log(data, "frontend");
+      // console.log(data, "frontend");
 
       if (response.ok) {
         toast.success('Registration successful!');

@@ -1,67 +1,62 @@
-"use client";
-
+"use client"
 import React, { useContext, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { GlobalContext } from '@/context';
 import { toast } from 'react-toastify';
-import Cookies from "js-cookie";
 import 'react-toastify/dist/ReactToastify.css';
+import HealthRecords from '@/components/HealthRecords';
 
 const ProfilePage = () => {
-    const { user, pet, setUser, setPet } = useContext(GlobalContext);
+    const { user, pet } = useContext(GlobalContext);
     const [isEditing, setIsEditing] = useState(false);
     const { register, handleSubmit, setValue } = useForm();
-
-    useEffect(() => {
-        if (user) {
-            setValue('name', user.name);
-            setValue('email', user.email);
-            setValue('city', user.city);
-            setValue('state', user.state);
-            setValue('country', user.country);
-            setValue('phone', user.phone);
-        }
-
-        if (pet) {
-            setValue('petName', pet[0].name);
-            setValue('breed', pet[0].breed);
-            setValue('age', pet[0].age);
-            setValue('gender', pet[0].gender);
-        }
-    }, [user, pet, setValue]);
 
     if (!user || !pet) {
         return <div className="flex justify-center items-center mt-16">
             <div className="loader"></div>
-        </div>;
+        </div>
     }
+
+    const { name, email, city, state, country, phone, _id: userId } = user;
+    const { _id: petId, name: petName, breed, age, gender, image } = pet[0];
 
     const handleEditClick = () => {
         setIsEditing(!isEditing);
+        // Prefill user details
+        setValue('name', name);
+        setValue('email', email);
+        setValue('city', city);
+        setValue('state', state);
+        setValue('country', country);
+        setValue('phone', phone);
+        // Prefill pet details
+        setValue('petName', petName);
+        setValue('breed', breed);
+        setValue('age', age);
+        setValue('gender', gender);
     };
 
     const onSubmit = async (data) => {
         try {
-            const token = Cookies.get('token');
-            const response = await axios.put('/api/users/updateUser', data, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const response = await axios.put('/api/users/updateUser', data);
 
             if (response.status === 200) {
-                setUser(response.data.user);
-                setPet([response.data.pet]); // Assuming the pet data is returned similarly
                 setIsEditing(false);
-                toast.success('Profile updated successfully!');
+                toast.success('Profile updated successfully!', {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+                // Optionally, update the user context here if necessary
             } else {
-                toast.error('Failed to update profile.');
+                toast.error('Failed to update profile.', {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
                 console.error('Failed to update user and pet details');
             }
         } catch (error) {
-            toast.error('An error occurred while updating the profile.');
+            toast.error('An error occurred while updating the profile.', {
+                position: toast.POSITION.TOP_RIGHT,
+            });
             console.error('Failed to update user and pet details', error);
         }
     };
@@ -72,31 +67,31 @@ const ProfilePage = () => {
                 <h1 className="text-3xl font-bold text-gray-900 mb-4 text-center my-3">User Profile</h1>
                 <div className="flex items-center mb-6">
                     <div>
-                        <h2 className="text-2xl font-semibold text-gray-900">{user.name}</h2>
-                        <p className="text-gray-700">{user.email}</p>
+                        <h2 className="text-2xl font-semibold text-gray-900">{name}</h2>
+                        <p className="text-gray-700">{email}</p>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                     <div>
                         <h3 className="text-xl font-semibold text-gray-900 mb-2">Contact Information</h3>
-                        <p className="text-gray-700">Phone: {user.phone}</p>
-                        <p className="text-gray-700">City: {user.city}</p>
-                        <p className="text-gray-700">State: {user.state}</p>
-                        <p className="text-gray-700">Country: {user.country}</p>
+                        <p className="text-gray-700">Phone: {phone}</p>
+                        <p className="text-gray-700">City: {city}</p>
+                        <p className="text-gray-700">State: {state}</p>
+                        <p className="text-gray-700">Country: {country}</p>
                     </div>
                     <div>
                         <h3 className="text-xl font-semibold text-gray-900 mb-2">Pet Information</h3>
                         <div className="flex items-center mb-4">
                             <img
-                                src={pet[0].image || "/dogPic.jpg"}
-                                alt={pet[0].name}
+                                src={image || "/dogPic.jpg"}
+                                alt={petName}
                                 className="w-16 h-16 rounded-full mr-4"
                             />
                             <div>
-                                <h4 className="text-lg font-semibold text-gray-900">{pet[0].name}</h4>
-                                <p className="text-gray-700">Breed: {pet[0].breed}</p>
-                                <p className="text-gray-700">Age: {pet[0].age}</p>
-                                <p className="text-gray-700">Gender: {pet[0].gender}</p>
+                                <h4 className="text-lg font-semibold text-gray-900">{petName}</h4>
+                                <p className="text-gray-700">Breed: {breed}</p>
+                                <p className="text-gray-700">Age: {age}</p>
+                                <p className="text-gray-700">Gender: {gender}</p>
                             </div>
                         </div>
                     </div>
@@ -168,7 +163,7 @@ const ProfilePage = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="breed" className="block text-gray-700">Pet Breed</label>
+                                <label htmlFor="breed" className="block text-gray-700">Breed</label>
                                 <input 
                                     id="breed" 
                                     {...register('breed')} 
@@ -176,29 +171,37 @@ const ProfilePage = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="age" className="block text-gray-700">Pet Age</label>
+                                <label htmlFor="age" className="block text-gray-700">Age</label>
                                 <input 
                                     id="age" 
                                     {...register('age')} 
+                                    type="number"
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="gender" className="block text-gray-700">Pet Gender</label>
-                                <input 
+                                <label htmlFor="gender" className="block text-gray-700">Gender</label>
+                                <select 
                                     id="gender" 
                                     {...register('gender')} 
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                />
+                                >
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
                             </div>
                         </div>
                         <button 
                             type="submit" 
                             className="bg-green-500 text-white px-4 py-2 mt-4 w-full text-center rounded hover:bg-green-600 transition duration-200">
-                            Update Profile
+                            Save Changes
                         </button>
                     </form>
                 )}
+                <div className="mt-8">
+                    <HealthRecords petId={petId} />
+                </div>
             </div>
         </div>
     );

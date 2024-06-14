@@ -12,7 +12,6 @@ export async function POST(req: NextRequest) {
         const reqBody = await req.json();
         const { email, password } = reqBody;
 
-        // Check if email and password are provided
         if (!email || !password) {
             console.log("Email or password missing");
             return NextResponse.json({ error: "Email and password are required" }, { status: 400 });
@@ -60,7 +59,7 @@ export async function POST(req: NextRequest) {
             user: finalData,
         });
 
-        response.cookies.set("token", token); // Set token as cookie
+        response.cookies.set("token", token);
 
         console.log("Response prepared. Sending response...");
         return response;

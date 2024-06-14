@@ -1,15 +1,28 @@
 "use client";
+
 import React, { useContext, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { GlobalContext } from '@/context';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import dayjs from 'dayjs';
+import {
+    Box, Button, IconButton, Typography, List, ListItem, ListItemText, ListItemSecondaryAction,
+    TextField, Grid, Collapse, Paper
+} from '@mui/material';
+import {
+    ExpandMore as ExpandMoreIcon,
+    ExpandLess as ExpandLessIcon,
+    Delete as DeleteIcon
+} from '@mui/icons-material';
 
 const HealthRecords = ({ petId }) => {
     const { register, handleSubmit, reset } = useForm();
     const [healthRecords, setHealthRecords] = useState([]);
     const [healthAlerts, setHealthAlerts] = useState([]);
+    const [showHealthForm, setShowHealthForm] = useState(false);
+    const [showAlertForm, setShowAlertForm] = useState(false);
     const { user } = useContext(GlobalContext);
 
     useEffect(() => {
@@ -80,132 +93,227 @@ const HealthRecords = ({ petId }) => {
         }
     };
 
+    const deleteHealthRecord = async (id) => {
+        try {
+            const response = await axios.delete(`/api/pet-health?id=${petId}&recordId=${id}`);
+            if (response.status === 200) {
+                toast.success('Health record deleted successfully!', {
+                    // position: toast.POSITION.TOP_RIGHT,
+                });
+                fetchHealthData();
+            } else {
+                toast.error('Failed to delete health record.', {
+                    // position: toast.POSITION.TOP_RIGHT,
+                });
+                console.error('Failed to delete health record');
+            }
+        } catch (error) {
+            toast.error('An error occurred while deleting health record.', {
+                // position: toast.POSITION.TOP_RIGHT,
+            });
+            console.error('Failed to delete health record', error);
+        }
+    };
+
+    const deleteHealthAlert = async (id) => {
+        try {
+            const response = await axios.delete(`/api/pet-health-alert?id=${petId}&alertId=${id}`);
+            if (response.status === 200) {
+                toast.success('Health alert deleted successfully!', {
+                    // position: toast.POSITION.TOP_RIGHT,
+                });
+                fetchHealthData();
+            } else {
+                toast.error('Failed to delete health alert.', {
+                    // position: toast.POSITION.TOP_RIGHT,
+                });
+                console.error('Failed to delete health alert');
+            }
+        } catch (error) {
+            toast.error('An error occurred while deleting health alert.', {
+                // position: toast.POSITION.TOP_RIGHT,
+            });
+            console.error('Failed to delete health alert', error);
+        }
+    };
+
     return (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <Box sx={{ bgcolor: 'background.paper', borderRadius: 2, p: 4, boxShadow: 3 }}>
             <ToastContainer />
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Health Records</h2>
-            <form onSubmit={handleSubmit(onSubmitHealthRecord)} className="mb-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="mb-4">
-                        <label htmlFor="type" className="block text-gray-700">Type</label>
-                        <input 
-                            id="type" 
-                            {...register('type')} 
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="date" className="block text-gray-700">Date</label>
-                        <input 
-                            type="date"
-                            id="date" 
-                            {...register('date')} 
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="description" className="block text-gray-700">Description</label>
-                        <input 
-                            id="description" 
-                            {...register('description')} 
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="vet" className="block text-gray-700">Vet</label>
-                        <input 
-                            id="vet" 
-                            {...register('vet')} 
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        />
-                    </div>
-                </div>
-                <button 
-                    type="submit" 
-                    className="bg-green-500 text-white px-4 py-2 mt-4 w-full text-center rounded hover:bg-green-600 transition duration-200">
-                    Add/Update Health Record
-                </button>
-            </form>
+            <Typography variant="h4" gutterBottom>
+                Health Records
+            </Typography>
 
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Health Alerts</h2>
-            <form onSubmit={handleSubmit(onSubmitHealthAlert)} className="mb-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="mb-4">
-                        <label htmlFor="alertType" className="block text-gray-700">Type</label>
-                        <input 
-                            id="alertType" 
-                            {...register('alertType')} 
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="alertDate" className="block text-gray-700">Date</label>
-                        <input 
-                            type="date"
-                            id="alertDate" 
-                            {...register('alertDate')} 
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="alertDescription" className="block text-gray-700">Description</label>
-                        <input 
-                            id="alertDescription" 
-                            {...register('alertDescription')} 
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        />
-                    </div>
-                </div>
-                <button 
-                    type="submit" 
-                    className="bg-green-500 text-white px-4 py-2 mt-4 w-full text-center rounded hover:bg-green-600 transition duration-200">
-                    Add/Update Health Alert
-                </button>
-            </form>
+            <Button
+                variant="contained"
+                color="primary"
+                endIcon={showHealthForm ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                onClick={() => setShowHealthForm(!showHealthForm)}
+                sx={{ mb: 2 }}
+            >
+                {showHealthForm ? 'Hide Health Form' : 'Show Health Form'}
+            </Button>
 
-            <div className="mt-6">
-                <h2 className="text-2xl font-semibold text-gray-900">Existing Health Records</h2>
+            <Collapse in={showHealthForm}>
+                <Paper elevation={2} sx={{ p: 3, mb: 4 }}>
+                    <form onSubmit={handleSubmit(onSubmitHealthRecord)}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    label="Type"
+                                    fullWidth
+                                    {...register('type')}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    label="Date"
+                                    type="date"
+                                    fullWidth
+                                    InputLabelProps={{ shrink: true }}
+                                    {...register('date')}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    label="Description"
+                                    fullWidth
+                                    {...register('description')}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    label="Vet"
+                                    fullWidth
+                                    {...register('vet')}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="success"
+                            fullWidth
+                            sx={{ mt: 3 }}
+                        >
+                            Add/Update Health Record
+                        </Button>
+                    </form>
+                </Paper>
+            </Collapse>
+
+            <Button
+                variant="contained"
+                color="primary"
+                endIcon={showAlertForm ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                onClick={() => setShowAlertForm(!showAlertForm)}
+                sx={{ mb: 2 }}
+            >
+                {showAlertForm ? 'Hide Alert Form' : 'Show Alert Form'}
+            </Button>
+
+            <Collapse in={showAlertForm}>
+                <Paper elevation={2} sx={{ p: 3, mb: 4 }}>
+                    <form onSubmit={handleSubmit(onSubmitHealthAlert)}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    label="Type"
+                                    fullWidth
+                                    {...register('alertType')}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    label="Date"
+                                    type="date"
+                                    fullWidth
+                                    InputLabelProps={{ shrink: true }}
+                                    {...register('alertDate')}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    label="Description"
+                                    fullWidth
+                                    {...register('alertDescription')}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="success"
+                            fullWidth
+                            sx={{ mt: 3 }}
+                        >
+                            Add/Update Health Alert
+                        </Button>
+                    </form>
+                </Paper>
+            </Collapse>
+
+            <Box mt={4}>
+                <Typography variant="h5" gutterBottom>
+                    Existing Health Records
+                </Typography>
                 {healthRecords.length > 0 ? (
-                    <ul className="divide-y divide-gray-200">
+                    <List>
                         {healthRecords.map(record => (
-                            <li key={record._id} className="py-4">
-                                <div className="flex space-x-3">
-                                    <div className="flex-1 space-y-1">
-                                        <p className="text-gray-900 text-lg font-semibold">{record.type}</p>
-                                        <p className="text-gray-600">{record.date}</p>
-                                        <p className="text-gray-600">{record.description}</p>
-                                        <p className="text-gray-600">Vet: {record.vet}</p>
-                                    </div>
-                                </div>
-                            </li>
+                            <ListItem key={record._id} divider>
+                                <ListItemText
+                                    primary={record.type}
+                                    secondary={
+                                        <>
+                                            <Typography variant="body2">{dayjs(record.date).format('MMMM D, YYYY')}</Typography>
+                                            <Typography variant="body2">{record.description}</Typography>
+                                            <Typography variant="body2">Vet: {record.vet}</Typography>
+                                        </>
+                                    }
+                                />
+                                <ListItemSecondaryAction>
+                                    <IconButton edge="end" color="error" onClick={() => deleteHealthRecord(record._id)}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </ListItemSecondaryAction>
+                            </ListItem>
                         ))}
-                    </ul>
+                    </List>
                 ) : (
-                    <p className="text-gray-700">No health records found.</p>
+                    <Typography variant="body2">No health records found.</Typography>
                 )}
-            </div>
+            </Box>
 
-            <div className="mt-6">
-                <h2 className="text-2xl font-semibold text-gray-900">Existing Health Alerts</h2>
+            <Box mt={4}>
+                <Typography variant="h5" gutterBottom>
+                    Existing Health Alerts
+                </Typography>
                 {healthAlerts.length > 0 ? (
-                    <ul className="divide-y divide-gray-200">
+                    <List>
                         {healthAlerts.map(alert => (
-                            <li key={alert._id} className="py-4">
-                                <div className="flex space-x-3">
-                                    <div className="flex-1 space-y-1">
-                                        <p className="text-gray-900 text-lg font-semibold">{alert.type}</p>
-                                        <p className="text-gray-600">{alert.date}</p>
-                                        <p className="text-gray-600">{alert.description}</p>
-                                    </div>
-                                </div>
-                            </li>
+                            <ListItem key={alert._id} divider>
+                                <ListItemText
+                                    primary={alert.type}
+                                    secondary={
+                                        <>
+                                            <Typography variant="body2">{dayjs(alert.date).format('MMMM D, YYYY')}</Typography>
+                                            <Typography variant="body2">{alert.description}</Typography>
+                                        </>
+                                    }
+                                />
+                                <ListItemSecondaryAction>
+                                    <IconButton edge="end" color="error" onClick={() => deleteHealthAlert(alert._id)}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </ListItemSecondaryAction>
+                            </ListItem>
                         ))}
-                    </ul>
+                    </List>
                 ) : (
-                    <p className="text-gray-700">No health alerts found.</p>
+                    <Typography variant="body2">No health alerts found.</Typography>
                 )}
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 };
 

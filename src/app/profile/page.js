@@ -1,10 +1,28 @@
-"use client"
+"use client";
 import React, { useContext, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { GlobalContext } from '@/context';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {
+    Box,
+    Button,
+    IconButton,
+    Typography,
+    Paper,
+    Grid,
+    TextField,
+    Collapse,
+    Avatar,
+    CircularProgress,
+    Container,
+    MenuItem,
+    Select,
+    FormControl,
+    InputLabel,
+} from '@mui/material';
+import { Edit as EditIcon, Save as SaveIcon } from '@mui/icons-material';
 import HealthRecords from '@/components/HealthRecords';
 
 const ProfilePage = () => {
@@ -13,9 +31,11 @@ const ProfilePage = () => {
     const { register, handleSubmit, setValue } = useForm();
 
     if (!user || !pet) {
-        return <div className="flex justify-center items-center mt-16">
-            <div className="loader"></div>
-        </div>
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" mt={8}>
+                <CircularProgress />
+            </Box>
+        );
     }
 
     const { name, email, city, state, country, phone, _id: userId } = user;
@@ -23,14 +43,12 @@ const ProfilePage = () => {
 
     const handleEditClick = () => {
         setIsEditing(!isEditing);
-        // Prefill user details
         setValue('name', name);
         setValue('email', email);
         setValue('city', city);
         setValue('state', state);
         setValue('country', country);
         setValue('phone', phone);
-        // Prefill pet details
         setValue('petName', petName);
         setValue('breed', breed);
         setValue('age', age);
@@ -46,7 +64,6 @@ const ProfilePage = () => {
                 toast.success('Profile updated successfully!', {
                     position: toast.POSITION.TOP_RIGHT,
                 });
-                // Optionally, update the user context here if necessary
             } else {
                 toast.error('Failed to update profile.', {
                     position: toast.POSITION.TOP_RIGHT,
@@ -62,148 +79,160 @@ const ProfilePage = () => {
     };
 
     return (
-        <div className="bg-gray-800 min-h-screen p-8">
-            <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-md p-6">
-                <h1 className="text-3xl font-bold text-gray-900 mb-4 text-center my-3">User Profile</h1>
-                <div className="flex items-center mb-6">
+        <Container>
+            <Paper elevation={3} sx={{ padding: 4, mt: 4 }}>
+                <Typography variant="h4" gutterBottom textAlign="center">
+                    User Profile
+                </Typography>
+                <Box display="flex" alignItems="center" mb={4}>
+                    <Avatar src={image || "/dogPic.jpg"} alt={petName} sx={{ width: 56, height: 56, mr: 2 }} />
                     <div>
-                        <h2 className="text-2xl font-semibold text-gray-900">{name}</h2>
-                        <p className="text-gray-700">{email}</p>
+                        <Typography variant="h6">{name}</Typography>
+                        <Typography variant="body1" color="textSecondary">{email}</Typography>
                     </div>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <h3 className="text-xl font-semibold text-gray-900 mb-2">Contact Information</h3>
-                        <p className="text-gray-700">Phone: {phone}</p>
-                        <p className="text-gray-700">City: {city}</p>
-                        <p className="text-gray-700">State: {state}</p>
-                        <p className="text-gray-700">Country: {country}</p>
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-semibold text-gray-900 mb-2">Pet Information</h3>
-                        <div className="flex items-center mb-4">
-                            <img
-                                src={image || "/dogPic.jpg"}
-                                alt={petName}
-                                className="w-16 h-16 rounded-full mr-4"
-                            />
-                            <div>
-                                <h4 className="text-lg font-semibold text-gray-900">{petName}</h4>
-                                <p className="text-gray-700">Breed: {breed}</p>
-                                <p className="text-gray-700">Age: {age}</p>
-                                <p className="text-gray-700">Gender: {gender}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button 
-                    onClick={handleEditClick} 
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
-                    Edit Profile
-                </button>
-                {isEditing && (
-                    <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                </Box>
+                <Grid container spacing={2} mb={4}>
+                    <Grid item xs={12} sm={6}>
+                        <Typography variant="h6">Contact Information</Typography>
+                        <Typography variant="body2">Phone: {phone}</Typography>
+                        <Typography variant="body2">City: {city}</Typography>
+                        <Typography variant="body2">State: {state}</Typography>
+                        <Typography variant="body2">Country: {country}</Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Typography variant="h6">Pet Information</Typography>
+                        <Typography variant="body2">Name: {petName}</Typography>
+                        <Typography variant="body2">Breed: {breed}</Typography>
+                        <Typography variant="body2">Age: {age}</Typography>
+                        <Typography variant="body2">Gender: {gender}</Typography>
+                    </Grid>
+                </Grid>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={isEditing ? <SaveIcon /> : <EditIcon />}
+                    onClick={handleEditClick}
+                >
+                    {isEditing ? 'Save Profile' : 'Edit Profile'}
+                </Button>
+                <Collapse in={isEditing}>
+                    <form onSubmit={handleSubmit(onSubmit)} style={{ marginTop: '16px' }}>
+                        <Grid container spacing={2}>
                             {/* User Details */}
-                            <div className="mb-4">
-                                <label htmlFor="name" className="block text-gray-700">Name</label>
-                                <input 
-                                    id="name" 
-                                    {...register('name')} 
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Name"
+                                    defaultValue={name}
+                                    {...register('name')}
+                                    variant="outlined"
                                 />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="email" className="block text-gray-700">Email</label>
-                                <input 
-                                    id="email" 
-                                    {...register('email')} 
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Email"
+                                    defaultValue={email}
+                                    {...register('email')}
+                                    variant="outlined"
                                 />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="phone" className="block text-gray-700">Phone</label>
-                                <input 
-                                    id="phone" 
-                                    {...register('phone')} 
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Phone"
+                                    defaultValue={phone}
+                                    {...register('phone')}
+                                    variant="outlined"
                                 />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="city" className="block text-gray-700">City</label>
-                                <input 
-                                    id="city" 
-                                    {...register('city')} 
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="City"
+                                    defaultValue={city}
+                                    {...register('city')}
+                                    variant="outlined"
                                 />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="state" className="block text-gray-700">State</label>
-                                <input 
-                                    id="state" 
-                                    {...register('state')} 
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="State"
+                                    defaultValue={state}
+                                    {...register('state')}
+                                    variant="outlined"
                                 />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="country" className="block text-gray-700">Country</label>
-                                <input 
-                                    id="country" 
-                                    {...register('country')} 
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Country"
+                                    defaultValue={country}
+                                    {...register('country')}
+                                    variant="outlined"
                                 />
-                            </div>
+                            </Grid>
                             {/* Pet Details */}
-                            <div className="mb-4">
-                                <label htmlFor="petName" className="block text-gray-700">Pet Name</label>
-                                <input 
-                                    id="petName" 
-                                    {...register('petName')} 
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Pet Name"
+                                    defaultValue={petName}
+                                    {...register('petName')}
+                                    variant="outlined"
                                 />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="breed" className="block text-gray-700">Breed</label>
-                                <input 
-                                    id="breed" 
-                                    {...register('breed')} 
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Breed"
+                                    defaultValue={breed}
+                                    {...register('breed')}
+                                    variant="outlined"
                                 />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="age" className="block text-gray-700">Age</label>
-                                <input 
-                                    id="age" 
-                                    {...register('age')} 
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Age"
+                                    defaultValue={age}
+                                    {...register('age')}
                                     type="number"
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    variant="outlined"
                                 />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="gender" className="block text-gray-700">Gender</label>
-                                <select 
-                                    id="gender" 
-                                    {...register('gender')} 
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                >
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button 
-                            type="submit" 
-                            className="bg-green-500 text-white px-4 py-2 mt-4 w-full text-center rounded hover:bg-green-600 transition duration-200">
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl fullWidth variant="outlined">
+                                    <InputLabel>Gender</InputLabel>
+                                    <Select
+                                        label="Gender"
+                                        defaultValue={gender}
+                                        {...register('gender')}
+                                    >
+                                        <MenuItem value="male">Male</MenuItem>
+                                        <MenuItem value="female">Female</MenuItem>
+                                        <MenuItem value="other">Other</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="success"
+                            fullWidth
+                            sx={{ mt: 2 }}
+                        >
                             Save Changes
-                        </button>
+                        </Button>
                     </form>
-                )}
-                <div className="mt-8">
+                </Collapse>
+                <Box mt={4}>
                     <HealthRecords petId={petId} />
-                </div>
-            </div>
-        </div>
+                </Box>
+            </Paper>
+        </Container>
     );
 };
 

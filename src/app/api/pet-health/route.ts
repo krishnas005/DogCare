@@ -46,3 +46,27 @@ export async function GET(req) {
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
+
+export async function DELETE(req) {
+    try {
+        await connect();
+
+        const url = new URL(req.url);
+        const petId = url.searchParams.get('id');
+        const recordId = url.searchParams.get('recordId');
+        if (!petId || !recordId) {
+            return NextResponse.json({ error: "Pet ID and Record ID are required" }, { status: 400 });
+        }
+
+        const updatedPet = await Pet.findByIdAndUpdate(
+            petId,
+            { $pull: { healthRecords: { _id: recordId } } },
+            { new: true }
+        );
+
+        return NextResponse.json({ success: true, pet: updatedPet }, { status: 200 });
+    } catch (error) {
+        console.error("Error deleting health record:", error);
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    }
+}

@@ -38,8 +38,8 @@ export default function LoginForm() {
       login(userData);
       localStorage.setItem('user', JSON.stringify(userData.user));
       localStorage.setItem('pet', JSON.stringify(userData.pet));
-      toast.success("Login successful");
       router.push("/");
+      toast.success("Login successful");
       setTimeout(() => {
         window.location.reload();
       }, 100);

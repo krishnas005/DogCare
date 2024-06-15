@@ -5,6 +5,7 @@ import axios from 'axios';
 import { GlobalContext } from '@/context';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'js-cookie';
 import {
     Box,
     Button,
@@ -26,7 +27,7 @@ import { Edit as EditIcon, Save as SaveIcon } from '@mui/icons-material';
 import HealthRecords from '@/components/HealthRecords';
 
 const ProfilePage = () => {
-    const { user, pet } = useContext(GlobalContext);
+    const { user, pet, setUser, setPet } = useContext(GlobalContext);
     const [isEditing, setIsEditing] = useState(false);
     const { register, handleSubmit, setValue } = useForm();
 
@@ -57,22 +58,30 @@ const ProfilePage = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.put('/api/users/updateUser', data);
+            const token = Cookies.get('token');
+            const response = await axios.put('/api/users/updateUser', data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
 
             if (response.status === 200) {
                 setIsEditing(false);
+                setUser(response.data.user);
+                setPet([response.data.pet]);
                 toast.success('Profile updated successfully!', {
-                    position: toast.POSITION.TOP_RIGHT,
+                    // position: toast.POSITION.TOP_RIGHT,
                 });
             } else {
                 toast.error('Failed to update profile.', {
-                    position: toast.POSITION.TOP_RIGHT,
+                    // position: toast.POSITION.TOP_RIGHT,
                 });
                 console.error('Failed to update user and pet details');
             }
         } catch (error) {
             toast.error('An error occurred while updating the profile.', {
-                position: toast.POSITION.TOP_RIGHT,
+                // position: toast.POSITION.TOP_RIGHT,
             });
             console.error('Failed to update user and pet details', error);
         }

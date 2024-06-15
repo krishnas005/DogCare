@@ -1,16 +1,21 @@
+// CustomNavbar.js
 "use client";
 
 import Link from 'next/link';
 import { useState, useContext, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { GlobalContext } from '@/context';
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaRegUserCircle, FaBell, FaTimes } from "react-icons/fa";
 import Cookies from "js-cookie";
-import {useRouter} from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
+import dayjs from 'dayjs';
 
 export default function CustomNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [healthAlerts, setHealthAlerts] = useState([]);
   const { isAuthUser, logout } = useContext(GlobalContext);
   const pathname = usePathname();
   const router = useRouter();
@@ -20,8 +25,22 @@ export default function CustomNavbar() {
     setIsProfileOpen(false);
   };
 
+  const petData = JSON.parse(localStorage.getItem('pet')) || {};
+  // console.log("Navbar frontend: ", petData)
+  // console.log("Navbar frontend petID: ", petData[0]._id)
+
+  const petId = petData && petData.length > 0 ? petData[0]._id : null;
+
+
   const handleProfileToggle = () => {
     setIsProfileOpen(!isProfileOpen);
+  };
+
+  const handleNotificationToggle = async () => {
+    setIsNotificationOpen(!isNotificationOpen);
+    if (!isNotificationOpen) {
+      await fetchHealthAlerts();
+    }
   };
 
   const handleLogout = () => {
@@ -32,23 +51,71 @@ export default function CustomNavbar() {
     setIsMenuOpen(false);
   };
 
-  
+  const fetchHealthAlerts = async () => {
+    try {
+      const response = await axios.get(`/api/pet-health-alert?id=${petId}`);
+      const alerts = response.data.healthAlerts;
+      const filteredAlerts = alerts.filter(alert => {
+        const alertDate = dayjs(alert.date);
+        const today = dayjs();
+        return alertDate.isSame(today, 'day') || alertDate.isSame(today.add(1, 'day'), 'day') || alertDate.isSame(today.add(2, 'day'), 'day');
+      });
+      setHealthAlerts(filteredAlerts);
+    } catch (error) {
+      console.error('Failed to fetch health alerts', error);
+    }
+  };
 
   return (
-    <nav className="bg-white shadow-lg">
+    <nav className="bg-white shadow-lg relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="text-2xl font-bold text-indigo-900">DogCare</Link>
           </div>
           <div className="hidden md:flex items-center space-x-6">
+            {/* Navigation Links */}
             <Link href="/services/daycare" className="text-gray-800 hover:text-indigo-600">Daycare</Link>
             <Link href="/services/training" className="text-gray-800 hover:text-indigo-600">Training</Link>
             <Link href="/services/veterinary" className="text-gray-800 hover:text-indigo-600">Veterinary</Link>
             <Link href="/articles" className="text-gray-800 hover:text-indigo-600">Articles</Link>
+            
+            {/* Notification Bell */}
+            <div className="relative">
+              <button className="text-gray-800 hover:text-indigo-600 focus:outline-none" onClick={handleNotificationToggle}>
+                <FaBell size={26} />
+                {healthAlerts.length > 0 && (
+                  <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">!</span>
+                )}
+              </button>
+              {/* Notification Modal */}
+              {isNotificationOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-sm">
+                  <div className="bg-white p-4 rounded shadow-lg max-w-md w-full md:w-96 max-h-80 overflow-y-auto">
+                    <h2 className="text-lg font-bold mb-4">Notifications</h2>
+                    {healthAlerts.length > 0 ? (
+                      healthAlerts.map(alert => (
+                        <div key={alert._id} className="mb-4">
+                          <h3 className="text-md font-semibold">{alert.type}</h3>
+                          <p className="text-gray-600">{dayjs(alert.date).format('MMMM D, YYYY')}</p>
+                          <p className="text-gray-600">{alert.description}</p>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-gray-600">No notifications for upcoming dates.</p>
+                    )}
+                    <button className="absolute top-4 right-4 text-gray-600 hover:text-red-600" onClick={handleNotificationToggle}>
+                      <FaTimes size={26} />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* Profile Dropdown */}
             {isAuthUser ? (
               <div className="relative group">
-                <button className="text-gray-800 hover:text-indigo-600 focus:outline-none mt-1.5" onClick={handleProfileToggle}>
+                <button className="text-gray-800 hover:text-indigo-600 focus:outline-none" onClick={handleProfileToggle}>
                   <FaRegUserCircle size={30} />
                 </button>
                 {isProfileOpen && (
@@ -66,10 +133,13 @@ export default function CustomNavbar() {
               )
             )}
           </div>
+          
+          {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-3">
+            {/* Profile Dropdown (Mobile) */}
             {isAuthUser ? (
               <div className="relative group">
-                <button className="text-gray-800 hover:text-indigo-600 focus:outline-none mt-1" onClick={handleProfileToggle}>
+                <button className="text-gray-800 hover:text-indigo-600 focus:outline-none" onClick={handleProfileToggle}>
                   <FaRegUserCircle size={28} />
                 </button>
                 {isProfileOpen && (
@@ -86,6 +156,8 @@ export default function CustomNavbar() {
                 <Link href="/login" className="text-gray-800 hover:text-indigo-600 border border-indigo-600 px-3 py-1 rounded-2xl">Login</Link>
               )
             )}
+            
+            {/* Hamburger Menu Icon */}
             <button
               onClick={handleMenuToggle}
               className="text-gray-800 hover:text-indigo-600 focus:outline-none"
@@ -108,9 +180,12 @@ export default function CustomNavbar() {
           </div>
         </div>
       </div>
+      
+      {/* Responsive Menu */}
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            {/* Links */}
             <Link href="/services/daycare" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-indigo-600 hover:bg-gray-100">Daycare</Link>
             <Link href="/services/training" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-indigo-600 hover:bg-gray-100">Training</Link>
             <Link href="/services/veterinary" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-indigo-600 hover:bg-gray-100">Veterinary</Link>

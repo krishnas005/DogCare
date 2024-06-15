@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { useRouter } from 'next/navigation';
 import { GlobalContext } from "@/context";
+import { PulseLoader } from "react-spinners";
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -16,6 +17,8 @@ const loginSchema = z.object({
 
 export default function LoginForm() {
   const { login, setUser } = useContext(GlobalContext);
+
+  const [isLoginProcessing, setIsLoginProcessing] = useState(false);
 
   const [loginDetails, setLoginDetails] = useState({
     email: '',
@@ -26,6 +29,7 @@ export default function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoginProcessing(true)
     const validation = loginSchema.safeParse(loginDetails);
     if (!validation.success) {
       toast.error(validation.error.errors[0].message);
@@ -38,15 +42,28 @@ export default function LoginForm() {
       login(userData);
       localStorage.setItem('user', JSON.stringify(userData.user));
       localStorage.setItem('pet', JSON.stringify(userData.pet));
-      router.push("/");
       toast.success("Login successful");
-      setTimeout(() => {
-        window.location.reload();
-      }, 100);
+      router.push("/");
     } catch (error) {
+      console.log("Login Frontend Error: ", error.message)
       toast.error(error.message);
+    } finally {
+      setIsLoginProcessing(false)
     }
   };
+
+  if (isLoginProcessing) {
+    return (
+        <div className="w-full min-h-screen flex justify-center items-center">
+            <PulseLoader
+                color={"#000000"}
+                loading={isLoginProcessing}
+                size={30}
+                data-testid="loader"
+            />
+        </div>
+    )
+}
 
   return (
     <div className="bg-gray-800 pt-16 min-h-screen">

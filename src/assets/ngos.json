@@ -1,0 +1,5 @@
+[
+    { city: 'New York', name: 'Paws for a Cause', contact: 'paws@example.com', phone: '+1234567890', address: '123 Main Street, New York' },
+    { city: 'New York', name: 'Stray Rescuers', contact: 'rescuers@example.com', phone: '+1987654321', address: '456 Elm Street, New York' },
+    { city: 'Los Angeles', name: 'Stray Angels', contact: 'angels@example.com', phone: '+1122334455', address: '789 Oak Avenue, Los Angeles' },
+];

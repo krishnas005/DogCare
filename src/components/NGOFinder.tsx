@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { FaCopy } from 'react-icons/fa';
+// import ngos from '../assets/ngos.json'
 
 const ngos = [
     { city: 'New York', name: 'Paws for a Cause', contact: 'paws@example.com', phone: '+1234567890', address: '123 Main Street, New York' },

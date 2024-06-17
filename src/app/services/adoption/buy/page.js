@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Image from 'next/image'; // Assuming you're using Next.js for image optimization
+import Image from 'next/image';
+import Link from 'next/link';
 
 const BuyDog = () => {
     const [dogsForAdoption, setDogsForAdoption] = useState([]);
@@ -14,9 +15,8 @@ const BuyDog = () => {
         try {
             const response = await axios.get('/api/dogs-for-adoption/buy');
             setDogsForAdoption(response.data);
-            // toast.success('Pets fetched successfully!');
         } catch (error) {
-            console.error('Error fetching dogs for adoption(page):', error);
+            console.error('Error fetching dogs for adoption:', error);
             toast.error('Error fetching dogs for adoption');
         } finally {
             setLoading(false);
@@ -32,7 +32,6 @@ const BuyDog = () => {
             const response = await axios.post(`/api/dogs-for-adoption/buy-dog?id=${dogId}`);
             if (response.status === 200) {
                 toast.success('Dog bought successfully');
-                // Reload dogs for adoption
                 loadDogsForAdoption();
             } else {
                 toast.error(response.data.error || 'Error buying dog');
@@ -46,14 +45,20 @@ const BuyDog = () => {
     return (
         <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
             <h1 className="text-4xl font-bold text-center mb-8">Adopt a Dog</h1>
+            <p className="text-lg text-gray-700 text-center mb-8">
+                Looking to bring a new furry friend into your home? Check out our selection of adorable dogs available for adoption. Each dog has been health-checked and is ready to find a loving home.
+            </p>
+            <p className="text-lg text-gray-700 text-center mb-8">
+                Before you proceed, make sure to read our <Link href="/articles/pet-adoption-checklist" className="text-blue-500 hover:underline">Pet Adoption Checklist</Link> to ensure you are fully prepared for your new pet.
+            </p>
             {loading ? (
                 <div className="flex justify-center items-center">
                     <div className="loader"></div>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
                     {dogsForAdoption.map((dog) => (
-                        <div key={dog.id} className="bg-white rounded-lg shadow-md p-6">
+                        <div key={dog.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
                             <Image
                                 src={dog.image || '/dogPic1.jpg'}
                                 alt={dog.name}

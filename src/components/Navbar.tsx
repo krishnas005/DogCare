@@ -83,7 +83,7 @@ export default function CustomNavbar() {
             <Link href="/articles" className="text-gray-800 hover:text-indigo-600">Articles</Link>
             {isAuthUser && (
               <div className="relative">
-                <button className="text-gray-800 hover:text-indigo-600 focus:outline-none" onClick={handleNotificationToggle}>
+                <button className="text-gray-800 hover:text-indigo-600 focus:outline-none mt-1" onClick={handleNotificationToggle}>
                   <FaBell size={24} />
                   {healthAlerts.length > 0 && (
                     <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">!</span>
@@ -114,7 +114,7 @@ export default function CustomNavbar() {
             )}
             {isAuthUser ? (
               <div className="relative group">
-                <button className="text-gray-800 hover:text-indigo-600 focus:outline-none" onClick={handleProfileToggle}>
+                <button className="text-gray-800 hover:text-indigo-600 focus:outline-none mt-1" onClick={handleProfileToggle}>
                   <FaRegUserCircle size={30} />
                 </button>
                 {isProfileOpen && (

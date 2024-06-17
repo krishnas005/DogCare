@@ -10,6 +10,7 @@ import PetCare from '@/components/PetCare';
 import NGOFinder from '@/components/NGOFinder';
 import Footer from '@/components/Footer';
 import EmailSection from '@/components/Feedback';
+import DangerousFood from '@/components/DangerousFood';
 
 const Home = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -53,6 +54,7 @@ const Home = () => {
       <NGOFinder />
       <PetCare />
       <ArticleSection />
+      <DangerousFood />
       <EmailSection />
       <Footer />
     </div>

@@ -3,13 +3,16 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaDog, FaMapMarkerAlt, FaFilter } from 'react-icons/fa';
+import { FaDog, FaMapMarkerAlt, FaFilter, FaPlus, FaTimes, FaCopy } from 'react-icons/fa';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const DogTrainingPage = () => {
     const [dogTrainers, setDogTrainers] = useState([]);
     const [filteredTrainers, setFilteredTrainers] = useState([]);
     const [city, setCity] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isCopied, setIsCopied] = useState(false);
 
     // Mock data for demonstration
     useEffect(() => {
@@ -32,6 +35,20 @@ const DogTrainingPage = () => {
 
     const handleFilterChange = (event) => {
         setCity(event.target.value);
+    };
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+        setIsCopied(false); // Reset copied state when the modal is toggled
+    };
+
+    const copyEmailToClipboard = () => {
+        navigator.clipboard.writeText('dogtrainer@network.com').then(() => {
+            setIsCopied(true);
+            setTimeout(() => {
+                setIsCopied(false);
+            }, 2000);
+        });
     };
 
     return (
@@ -76,9 +93,42 @@ const DogTrainingPage = () => {
                 <div className="bg-gray-600 p-8 rounded-lg border-2 shadow-lg inline-block max-w-md">
                     <h2 className="text-xl md:text-2xl text-blue-400 font-semibold mb-4 tracking-tighter">Are You a Dog Trainer?</h2>
                     <p className="text-sm md:text-[16px] mb-6">Join our network and reach more pet owners looking for professional dog training services. Register now to expand your client base and help more dogs reach their full potential.</p>
-                    <a href="/register-training" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition tracking-tighter">Register for Dog Trainer</a>
+                    <button onClick={toggleModal} className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition tracking-tighter">
+                        <FaPlus className="inline-block mr-1" /> Register as a Dog Trainer
+                    </button>
                 </div>
             </div>
+
+            {isModalOpen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="bg-black bg-opacity-50 absolute inset-0" onClick={toggleModal}></div>
+                    <div className="bg-white p-8 rounded-lg shadow-lg z-10 max-w-md w-full mx-4 text-center relative">
+                        <button onClick={toggleModal} className="absolute top-4 right-4 text-gray-600 hover:text-gray-900">
+                            <FaTimes />
+                        </button>
+                        <h2 className="text-xl font-bold mb-4 text-blue-500">Register as a Dog Trainer</h2>
+                        <p className="mb-4 text-gray-700 text-left">To join our network, please send your details, qualifications, and other relevant information to the email address below for verification. We will get back to you shortly.</p>
+                        <div className="flex items-center justify-center mb-4">
+                            <Link href="mailto:dogtrainer@network.com" className="font-semibold text-blue-600">dogtrainer@network.com</Link>
+                            <button onClick={copyEmailToClipboard} className="ml-2 text-gray-600 hover:text-gray-900">
+                                <FaCopy />
+                            </button>
+                        </div>
+                        {isCopied && <p className="text-green-600 text-sm mt-2">Email address copied to clipboard!</p>}
+                        <p className="text-gray-600 mt-4">Include the following details:</p>
+                        <ul className="text-gray-600 list-disc list-inside text-left mt-2">
+                            <li>Full Name</li>
+                            <li>Contact Information</li>
+                            <li>Qualifications</li>
+                            <li>Specialties</li>
+                            <li>Years of Experience</li>
+                            <li>Location</li>
+                            <li>Picture Samples</li>
+                            <li>List of Equipment</li>
+                        </ul>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -18,7 +18,7 @@ const DangerousFood = () => {
                     <li>Macadamia nuts</li>
                     <li>Food containing xylitol - an artificial sweetener (E967)</li>
                 </ul>
-                <div className="mt-4 ml-4">For more details <Link href="https://www.aspca.org/pet-care/animal-poison-control/people-foods-avoid-feeding-your-pets" className="text-blue-400 ">read</Link> </div>
+                <div className="mt-4 ml-4">For more details <Link href="https://www.aspca.org/pet-care/animal-poison-control/people-foods-avoid-feeding-your-pets" className="text-blue-500 hover:text-blue-700">read</Link> </div>
             </div>
         </div>
     );

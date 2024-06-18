@@ -2,13 +2,15 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { FaStethoscope, FaMapMarkerAlt, FaFilter, FaPlus } from 'react-icons/fa';
+import { FaStethoscope, FaMapMarkerAlt, FaFilter, FaPlus, FaTimes, FaCopy } from 'react-icons/fa';
 import Link from 'next/link';
 
 export default function VeterinaryPage() {
     const [vets, setVets] = useState([]);
     const [filteredVets, setFilteredVets] = useState([]);
     const [city, setCity] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isCopied, setIsCopied] = useState(false);
 
     // Mock data for demonstration
     useEffect(() => {
@@ -33,6 +35,22 @@ export default function VeterinaryPage() {
     // Handle city filter input change
     const handleFilterChange = (event) => {
         setCity(event.target.value);
+    };
+
+    // Handle modal visibility
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+        setIsCopied(false); // Reset copied state when the modal is toggled
+    };
+
+    // Handle email copy to clipboard
+    const copyEmailToClipboard = () => {
+        navigator.clipboard.writeText('register@veterinarynetwork.com').then(() => {
+            setIsCopied(true);
+            setTimeout(() => {
+                setIsCopied(false);
+            }, 2000);
+        });
     };
 
     return (
@@ -77,11 +95,40 @@ export default function VeterinaryPage() {
                 <div className="bg-gray-600 p-8 rounded-lg border-2 shadow-lg inline-block max-w-lg mx-auto">
                     <h2 className="text-xl md:text-2xl font-bold mb-4 tracking-tighter text-blue-500">Join our Network</h2>
                     <p className="text-md mb-6">Join our network and reach more pet owners looking for professional veterinary services. Register now to expand your client base and help more pets receive the care they deserve.</p>
-                    <Link href="/register-veterinary" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition tracking-tighter text-sm">
-                            <FaPlus className="inline-block mr-1" /> Register as a Veterinarian
-                    </Link>
+                    <button onClick={toggleModal} className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition tracking-tighter text-sm">
+                        <FaPlus className="inline-block mr-1" /> Register as a Veterinarian
+                    </button>
                 </div>
             </div>
+
+            {isModalOpen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="bg-black bg-opacity-50 absolute inset-0" onClick={toggleModal}></div>
+                    <div className="bg-white p-8 rounded-lg shadow-lg z-10 max-w-md w-full mx-4 text-center relative">
+                        <button onClick={toggleModal} className="absolute top-4 right-4 text-gray-600 hover:text-gray-900">
+                            <FaTimes />
+                        </button>
+                        <h2 className="text-xl font-bold mb-4 text-blue-500">Register as a Veterinarian</h2>
+                        <p className="mb-4 text-gray-700 text-left">To join our network, please send your details, qualifications, and other relevant information to the email address below for verification. We will get back to you shortly.</p>
+                        <div className="flex items-center justify-center mb-4">
+                            <Link href="mailto:register@veterinarynetwork.com" className="font-semibold text-blue-600">register@veterinarynetwork.com</Link>
+                            <button onClick={copyEmailToClipboard} className="ml-2 text-gray-600 hover:text-gray-900">
+                                <FaCopy />
+                            </button>
+                        </div>
+                        {isCopied && <p className="text-black text-sm mt-2">Email address copied to clipboard!</p>}
+                        <p className="text-gray-600 mt-4">Include the following details:</p>
+                        <ul className="text-gray-600 list-disc list-inside text-left mt-2">
+                            <li>Full Name</li>
+                            <li>Contact Information</li>
+                            <li>Qualifications</li>
+                            <li>Specialties</li>
+                            <li>Years of Experience</li>
+                            <li>Location</li>
+                        </ul>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

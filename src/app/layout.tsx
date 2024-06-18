@@ -6,7 +6,7 @@ import { GlobalProvider } from "@/context";
 
 export const metadata: Metadata = {
   title: "DogCare",
-  description: "",
+  description: "Your go to place for DogCare",
 };
 
 export default function RootLayout({
@@ -17,8 +17,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <title>DogCare</title>
-        <meta name="description" content="Your go-to platform for dog care" />
         <link rel="icon" href="/favicon.png" />
       </Head>
       <body>

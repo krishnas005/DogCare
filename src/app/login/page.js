@@ -9,13 +9,14 @@ import axios from "axios";
 import { useRouter } from 'next/navigation';
 import { GlobalContext } from "@/context";
 import { PulseLoader } from "react-spinners";
+import useAuth from '@/utils/useAuth';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters long'),
 });
 
-export default function LoginForm() {
+const LoginForm = () => {
   const { login, setUser } = useContext(GlobalContext);
 
   const [isLoginProcessing, setIsLoginProcessing] = useState(false);
@@ -106,3 +107,5 @@ export default function LoginForm() {
     </div>
   );
 }
+
+export default useAuth(LoginForm, {redirectIfAuth: true});

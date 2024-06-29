@@ -6,6 +6,7 @@ import { GlobalContext } from '@/context';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
+import useAuth from "@/utils/useAuth";
 import {
     Box,
     Button,
@@ -246,4 +247,5 @@ const ProfilePage = () => {
     );
 };
 
-export default ProfilePage;
+export default useAuth(ProfilePage, { requireAuth: true });
+

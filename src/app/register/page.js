@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import {useRouter} from 'next/navigation';
-
+import useAuth from '@/utils/useAuth';
 
 const userSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -27,7 +27,7 @@ const dogSchema = z.object({
   photo: z.any().nullable(),
 });
 
-export default function RegistrationForm() {
+const RegistrationForm = () => {
   const router = useRouter()
   const [step, setStep] = useState(1);
   
@@ -259,3 +259,5 @@ export default function RegistrationForm() {
     </div>
   );
 }
+
+export default useAuth(RegistrationForm, {redirectIfAuth: true});

@@ -1,8 +1,8 @@
 import connect from "@/dbConfig/dbConfig";
 import Pet from "@/models/petModel";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(req) {
+export async function PUT(req: NextRequest) {
     try {
         await connect();
 
@@ -22,13 +22,13 @@ export async function PUT(req) {
         );
 
         return NextResponse.json({ success: true, pet: updatedPet }, { status: 200 });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error updating health records:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
 
-export async function GET(req) {
+export async function GET(req: NextRequest) {
     try {
         await connect();
 
@@ -41,13 +41,13 @@ export async function GET(req) {
         const pet = await Pet.findById(petId);
 
         return NextResponse.json({ success: true, healthRecords: pet.healthRecords }, { status: 200 });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error fetching health records:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
 
-export async function DELETE(req) {
+export async function DELETE(req: NextRequest) {
     try {
         await connect();
 
@@ -65,7 +65,7 @@ export async function DELETE(req) {
         );
 
         return NextResponse.json({ success: true, pet: updatedPet }, { status: 200 });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error deleting health record:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }

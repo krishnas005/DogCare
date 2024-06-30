@@ -1,8 +1,8 @@
 import connect from "@/dbConfig/dbConfig";
 import DogForAdoption from "@/models/dogAdoptionModel";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req) {
+export async function POST(req: NextRequest) {
     await connect();
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");

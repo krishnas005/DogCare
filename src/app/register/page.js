@@ -6,7 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import useAuth from '@/utils/useAuth';
 
 const userSchema = z.object({
@@ -27,10 +27,11 @@ const dogSchema = z.object({
   photo: z.any().nullable(),
 });
 
-const RegistrationForm = () => {
-  const router = useRouter()
+const RegistrationFormComponent = () => {
+  const router = useRouter();
+  const token = useAuth({ redirectIfAuth: true }); // Ensure user is not authenticated to access this form
+
   const [step, setStep] = useState(1);
-  
   const [userDetails, setUserDetails] = useState({
     name: '',
     email: '',
@@ -40,6 +41,7 @@ const RegistrationForm = () => {
     state: '',
     country: '',
   });
+
   const [dogDetails, setDogDetails] = useState({
     dogName: '',
     breed: '',
@@ -73,6 +75,7 @@ const RegistrationForm = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // Include token in headers for authentication
         },
         body: JSON.stringify({
           userName: userDetails.name,
@@ -90,11 +93,10 @@ const RegistrationForm = () => {
       });
 
       const data = await response.json();
-      // console.log(data, "frontend");
 
       if (response.ok) {
         toast.success('Registration successful!');
-        router.push('/')
+        router.push('/');
       } else {
         toast.error(data.error || 'Registration failed');
       }
@@ -106,158 +108,168 @@ const RegistrationForm = () => {
   return (
     <div className="bg-gray-800 py-10">
       <div className="max-w-2xl mx-auto p-8 bg-gray-200 shadow-2xl rounded-md py-10">
-      <ToastContainer />
-      {step === 1 && (
-        <div>
-          <h2 className="text-3xl font-semibold text-black mb-6 mt-2 text-center">User Details</h2>
-          <form>
-            <div className="mb-6">
-              <label className="block text-black font-medium mb-2">Name</label>
-              <input
-                type="text"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={userDetails.name}
-                placeholder='Enter your name'
-                onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-black font-medium mb-2">Email</label>
-              <input
-                type="email"
-                placeholder='Enter your email'
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={userDetails.email}
-                onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-black font-medium mb-2">Phone</label>
-              <input
-                type="text"
-                placeholder='Enter your phone number'
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={userDetails.phone}
-                onChange={(e) => setUserDetails({ ...userDetails, phone: e.target.value })}
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-black font-medium mb-2">Password</label>
-              <input
-                type="password"
-                placeholder='Enter a password'
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={userDetails.password}
-                onChange={(e) => setUserDetails({ ...userDetails, password: e.target.value })}
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-black font-medium mb-2">Country</label>
-              <CountryDropdown
-                value={userDetails.country}
-                onChange={(val) => setUserDetails({ ...userDetails, country: val, state: '', city: '' })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-black font-medium mb-2">State</label>
-              <RegionDropdown
-                country={userDetails.country}
-                value={userDetails.state}
-                onChange={(val) => setUserDetails({ ...userDetails, state: val, city: '' })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-black font-medium mb-2">City</label>
-              <input
-                type="text"
-                placeholder='Enter your city'
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={userDetails.city}
-                onChange={(e) => setUserDetails({ ...userDetails, city: e.target.value })}
-              />
-            </div>
-            <button
-              type="button"
-              onClick={handleNext}
-              className="w-full px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              Next
-            </button>
-          </form>
-          <p className="mt-4 text-center text-gray-600">
-            Already have an account?{' '}
-            <Link href="/login" className="text-blue-500 hover:underline">Login</Link>
-          </p>
-        </div>
-      )}
-      {step === 2 && (
-        <div>
-          <h2 className="text-3xl font-semibold text-black mb-6 text-center">Dog Details</h2>
-          <form>
-            <div className="mb-6">
-              <label className="block text-black font-medium mb-2">Dog Name</label>
-              <input
-                type="text"
-                placeholder='Enter your dog name'
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={dogDetails.dogName}
-                onChange={(e) => setDogDetails({ ...dogDetails, dogName: e.target.value })}
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-black font-medium mb-2">Breed</label>
-              <input
-                type="text"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={dogDetails.breed}
-                placeholder='Enter your dog breed'
-                onChange={(e) => setDogDetails({ ...dogDetails, breed: e.target.value })}
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-black font-medium mb-2">Age (in months)</label>
-              <input
-                type="text"
-                placeholder='Enter your dog age'
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={dogDetails.age}
-                onChange={(e) => setDogDetails({ ...dogDetails, age: e.target.value })}
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-black font-medium mb-2">Gender</label>
-              <input
-                type="text"
-                placeholder='Enter your dog gender'
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={dogDetails.gender}
-                onChange={(e) => setDogDetails({ ...dogDetails, gender: e.target.value })}
-              />
-            </div>
-            <div className="flex justify-between">
+        <ToastContainer />
+        {step === 1 && (
+          <div>
+            <h2 className="text-3xl font-semibold text-black mb-6 mt-2 text-center">User Details</h2>
+            <form>
+              <div className="mb-6">
+                <label className="block text-black font-medium mb-2">Name</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={userDetails.name}
+                  placeholder='Enter your name'
+                  onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-black font-medium mb-2">Email</label>
+                <input
+                  type="email"
+                  placeholder='Enter your email'
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={userDetails.email}
+                  onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-black font-medium mb-2">Phone</label>
+                <input
+                  type="text"
+                  placeholder='Enter your phone number'
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={userDetails.phone}
+                  onChange={(e) => setUserDetails({ ...userDetails, phone: e.target.value })}
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-black font-medium mb-2">Password</label>
+                <input
+                  type="password"
+                  placeholder='Enter a password'
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={userDetails.password}
+                  onChange={(e) => setUserDetails({ ...userDetails, password: e.target.value })}
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-black font-medium mb-2">Country</label>
+                <CountryDropdown
+                  value={userDetails.country}
+                  onChange={(val) => setUserDetails({ ...userDetails, country: val, state: '', city: '' })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-black font-medium mb-2">State</label>
+                <RegionDropdown
+                  country={userDetails.country}
+                  value={userDetails.state}
+                  onChange={(val) => setUserDetails({ ...userDetails, state: val, city: '' })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-black font-medium mb-2">City</label>
+                <input
+                  type="text"
+                  placeholder='Enter your city'
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={userDetails.city}
+                  onChange={(e) => setUserDetails({ ...userDetails, city: e.target.value })}
+                />
+              </div>
               <button
                 type="button"
-                onClick={handleBack}
-                className="w-1/3 px-4 py-2 bg-gray-500 text-white rounded-md shadow hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                onClick={handleNext}
+                className="w-full px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                Back
+                Next
               </button>
+            </form>
+            <p className="mt-4 text-center text-gray-600">
+              Already have an account?{' '}
+              <Link href="/login" className="text-blue-500 hover:underline">Login</Link>
+            </p>
+          </div>
+        )}
+        {step === 2 && (
+          <div>
+            <h2 className="text-3xl font-semibold text-black mb-6 text-center">Dog Details</h2>
+            <form>
+              <div className="mb-6">
+                <label className="block text-black font-medium mb-2">Dog Name</label>
+                <input
+                  type="text"
+                  placeholder='Enter your dog name'
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={dogDetails.dogName}
+                  onChange={(e) => setDogDetails({ ...dogDetails, dogName: e.target.value })}
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-black font-medium mb-2">Breed</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={dogDetails.breed}
+                  placeholder='Enter your dog breed'
+                  onChange={(e) => setDogDetails({ ...dogDetails, breed: e.target.value })}
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-black font-medium mb-2">Age (in months)</label>
+                <input
+                  type="text"
+                  placeholder='Enter your dog age'
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={dogDetails.age}
+                  onChange={(e) => setDogDetails({ ...dogDetails, age: e.target.value })}
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-black font-medium mb-2">Gender</label>
+                <input
+                  type="text"
+                  placeholder='Enter your dog gender'
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={dogDetails.gender}
+                  onChange={(e) => setDogDetails({ ...dogDetails, gender: e.target.value })}
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-black font-medium mb-2">Photo</label>
+                <input
+                  type="file"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onChange={(e) => setDogDetails({ ...dogDetails, photo: e.target.files[0] })}
+                />
+              </div>
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="w-1/3 px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 Submit
               </button>
-            </div>
-          </form>
-        </div>
-      )}
-    </div>
+              <button
+                type="button"
+                onClick={handleBack}
+                className="w-full mt-4 px-4 py-2 bg-gray-500 text-white rounded-md shadow hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              >
+                Back
+              </button>
+            </form>
+          </div>
+        )}
+      </div>
     </div>
   );
-}
+};
 
-export default useAuth(RegistrationForm, {redirectIfAuth: true});
+const RegistrationForm = () => {
+  return <RegistrationFormComponent />;
+};
+
+export default RegistrationForm;

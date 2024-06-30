@@ -19,7 +19,7 @@ export async function POST (req: NextRequest, res: NextResponse) {
             { message: "Pet stored successfully" },
             { status: 201 }
         )
-    } catch (err) {
+    } catch (err: any) {
         return NextResponse.json({ error: err.message }, { status: 500 });
         
     }

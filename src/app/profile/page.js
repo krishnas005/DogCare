@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useContext, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -31,6 +32,16 @@ const ProfilePage = () => {
     const { user, pet, setUser, setPet } = useContext(GlobalContext);
     const [isEditing, setIsEditing] = useState(false);
     const { register, handleSubmit, setValue } = useForm();
+
+    const token = useAuth({ requireAuth: true });
+
+    if (!token) {
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" mt={8}>
+                <CircularProgress />
+            </Box>
+        );
+    }
 
     if (!user || !pet) {
         return (
@@ -247,5 +258,4 @@ const ProfilePage = () => {
     );
 };
 
-export default useAuth(ProfilePage, { requireAuth: true });
-
+export default ProfilePage;

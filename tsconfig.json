@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/register/page.js", "src/app/login/page.js", "src/clientComponents/ChannelContainer.jsx", "src/app/profile/page.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/register/page.js", "src/app/login/page.js", "src/clientComponents/ChannelContainer.jsx", "src/app/profile/page.js", "src/app/api/users/updateUser/route.js", "src/components/DietPlanner.jsx", "src/components/Feedback.jsx", "src/components/HealthRecords.jsx", "src/components/Navbar.jsx", "src/components/NGOFinder.jsx"],
   "exclude": ["node_modules"]
 }

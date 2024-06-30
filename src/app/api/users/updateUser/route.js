@@ -1,7 +1,7 @@
 import connect from "@/dbConfig/dbConfig";
 import User from "@/models/userModel";
 import Pet from "@/models/petModel";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
 export async function PUT(req) {
@@ -18,7 +18,7 @@ export async function PUT(req) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         console.log("Decoded id: ", decoded.id);
 
         const body = await req.json();

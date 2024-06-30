@@ -54,7 +54,7 @@ const Article = () => {
                         <h2 className="text-2xl font-semibold mt-8 mb-4">Shopping Checklist</h2>
                         <p>It may be a good idea to wait until you select your new pet before you begin shopping for supplies. For example, some items, such as food and water bowls or collars and harnesses, depend upon the size of the pet you will be adopting.</p>
                         <p>Also, be sure to find out which food your pet was eating in the shelter or foster home so that you can provide the same in the beginning, again to ease the transition. After the pet has settled in, talk with your veterinarian about switching to the food of your choice.</p>
-                        <p>Once you've selected your pet, here's a checklist of supplies you may need:</p>
+                        <p>Once you&apos;ve selected your pet, here&apos;s a checklist of supplies you may need:</p>
                         
                         <h3 className="text-xl font-semibold mt-6 mb-2">Necessary Items for Dogs:</h3>
                         <ul className="list-disc list-inside">
@@ -68,7 +68,7 @@ const Article = () => {
                             <li>Doggy shampoo and conditioner</li>
                             <li>Nail clippers</li>
                             <li>Canine toothbrush and toothpaste</li>
-                            <li>Brush or comb (depends on your pet's coat length and type)</li>
+                            <li>Brush or comb (depends on your pet&apos;s coat length and type)</li>
                             <li>Super-absorbent paper towels</li>
                             <li>Sponge and scrub brush</li>
                             <li>Non-toxic cleanser</li>

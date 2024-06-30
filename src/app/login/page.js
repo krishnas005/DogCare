@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { z } from 'zod';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,13 +27,15 @@ const LoginForm = () => {
   });
 
   const router = useRouter();
+  const token = useAuth({ redirectIfAuth: true });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoginProcessing(true)
+    setIsLoginProcessing(true);
     const validation = loginSchema.safeParse(loginDetails);
     if (!validation.success) {
       toast.error(validation.error.errors[0].message);
+      setIsLoginProcessing(false);
       return;
     }
     try {
@@ -46,25 +48,25 @@ const LoginForm = () => {
       toast.success("Login successful");
       router.push("/");
     } catch (error) {
-      console.log("Login Frontend Error: ", error.message)
+      console.log("Login Frontend Error: ", error.message);
       toast.error(error.message);
     } finally {
-      setIsLoginProcessing(false)
+      setIsLoginProcessing(false);
     }
   };
 
   if (isLoginProcessing) {
     return (
-        <div className="w-full min-h-screen flex justify-center items-center">
-            <PulseLoader
-                color={"#000000"}
-                loading={isLoginProcessing}
-                size={30}
-                data-testid="loader"
-            />
-        </div>
-    )
-}
+      <div className="w-full min-h-screen flex justify-center items-center">
+        <PulseLoader
+          color={"#000000"}
+          loading={isLoginProcessing}
+          size={30}
+          data-testid="loader"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-800 pt-16 min-h-screen">
@@ -108,4 +110,4 @@ const LoginForm = () => {
   );
 }
 
-export default useAuth(LoginForm, {redirectIfAuth: true});
+export default LoginForm;

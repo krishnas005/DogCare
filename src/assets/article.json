@@ -1,44 +1,56 @@
 [
     {
         "id": 1,
-        "title": "The Importance of Regular Vet Visits",
-        "summary": "Learn why regular veterinary checkups are crucial for your dog’s health and wellbeing.",
-        "content": "Regular veterinary visits are essential for maintaining your dog's health. During these visits, the vet will check your dog's overall condition, monitor for any developing health issues, administer vaccinations, and provide preventive care measures. Early detection of health problems can lead to timely treatment, improving your dog's quality of life and potentially saving on future medical costs.",
-        "image": "/vet-visits.jpg"
+        "title": "The Complete Guide to Regular Vet Visits",
+        "summary": "Why preventive care is your dog's first defense against health problems",
+        "content": "Regular veterinary visits are essential for maintaining your dog's health. During these visits, the vet will perform a comprehensive physical examination including:\n\n1. **Head-to-Tail Physical Exam**\n- Eyes: Checking for cataracts or dry eye\n- Ears: Looking for infections or mites\n- Mouth: Evaluating dental health and plaque buildup\n- Skin/Coat: Checking for allergies or parasites\n- Joints: Assessing mobility and pain\n\n2. **Preventive Care Services**\n- Core vaccinations (rabies, distemper, parvovirus)\n- Optional vaccines based on lifestyle (bordetella, leptospirosis)\n- Parasite prevention (fleas, ticks, heartworm)\n- Nutritional counseling\n\n3. **Diagnostic Testing**\n- Annual blood work for senior dogs\n- Fecal exams for parasites\n- Urinalysis for kidney health\n\n**Pro Tip:** Create a 'vet visit kit' with your dog's favorite treats, medical history, and a comfort item to reduce stress.",
+        "image": "/vet-visits.jpg",
+        "read_time": "8 min",
+        "tags": ["preventive care", "dog health", "veterinary"]
     },
     {
         "id": 2,
-        "title": "Top 10 Dog Training Tips",
-        "summary": "Discover effective dog training tips to ensure a well-behaved furry friend.",
-        "content": "Training your dog is not only about teaching basic commands but also about building a strong bond and fostering positive behavior. Consistency, patience, and positive reinforcement are key elements of successful dog training. Start with basic commands like sit, stay, and come. Gradually introduce more complex tasks and always reward good behavior. Remember, every dog learns at its own pace, so be patient and enjoy the journey of training your furry companion.",
-        "image": "/dog-training.jpg"
+        "title": "Dog Training Mastery: From Basics to Advanced",
+        "summary": "Evidence-based techniques for a well-behaved companion",
+        "content": "**Section 1: Foundational Training**\n1. **Positive Reinforcement 101**\n- Timing: Reward within 2 seconds of good behavior\n- Value: Use high-value treats for difficult commands\n- Fading: Gradually reduce treats as behavior becomes consistent\n\n2. **Essential Commands**\n- Sit/Stay: Foundation for impulse control\n- Leave It: Critical for safety\n- Recall: Potentially life-saving in emergencies\n\n**Section 2: Solving Common Problems**\n- **Leash Pulling**: Use front-clip harnesses and stop-and-go training\n- **Jumping**: Turn away and only reward four-on-the-floor behavior\n- **Barking**: Identify triggers and teach 'quiet' command\n\n**Advanced Techniques**\n- Capturing: Reward natural good behavior\n- Shaping: Break complex tasks into small steps\n- Proofing: Practice commands in various environments\n\n**Training Schedule Example**\n| Age    | Focus Area           | Session Length |\n|--------|----------------------|----------------|\n| 8-12w  | Socialization        | 5-10 minutes   |\n| 3-6m   | Basic commands       | 10-15 minutes  |\n| 6m+    | Advanced skills      | 15-20 minutes  |",
+        "image": "/dog-training.jpg",
+        "read_time": "12 min",
+        "tags": ["obedience", "puppy training", "behavior"]
     },
     {
         "id": 3,
-        "title": "Healthy Diet for Dogs",
-        "summary": "Understand the components of a healthy diet and how to provide balanced nutrition for your dog.",
-        "content": "A balanced diet is crucial for your dog's overall health and wellbeing. Provide a mix of high-quality protein, healthy fats, carbohydrates, vitamins, and minerals. Consult with your vet to determine the right portion sizes and feeding schedule based on your dog's breed, age, size, and activity level. Avoid feeding your dog human foods that can be harmful, such as chocolate, onions, and grapes. Fresh water should always be available for your dog. Remember, a healthy diet leads to a healthy and happy dog!",
-        "image": "/healthy-diet.jpg"
+        "title": "Canine Nutrition: Building the Perfect Diet",
+        "summary": "Science-backed feeding strategies for every life stage",
+        "content": "**Nutritional Requirements Breakdown**\n\n1. **Macronutrients**\n- Protein: 18-25% for adults (25-30% for puppies)\n- Fats: 10-15% (with omega-3 for skin/coat)\n- Carbohydrates: 30-50% from digestible sources\n\n2. **Life Stage Feeding**\n| Age Group | Special Needs                  | Sample Foods                  |\n|-----------|--------------------------------|-------------------------------|\n| Puppy     | DHA for brain development      | Salmon, egg yolks             |\n| Adult     | Weight management              | Lean meats, green vegetables  |\n| Senior    | Joint support, fiber           | Pumpkin, sweet potato, turmeric |\n\n**Danger Zone Foods**\n🚫 **Toxic**: Chocolate, xylitol, grapes\n⚠️ **Risky**: Onions, garlic, macadamia nuts\n\n**Supplement Guide**\n- Probiotics: For digestive health\n- Glucosamine: Joint support for large breeds\n- Fish Oil: Skin/coat and anti-inflammatory\n\n**Meal Prep Tip:** Batch-cook and freeze portioned meals using 70% protein, 20% veggies, 10% carbs.",
+        "image": "/healthy-diet.jpg",
+        "read_time": "10 min",
+        "tags": ["dog food", "nutrition", "feeding guide"]
     },
     {
         "id": 4,
-        "title": "Common Dog Diseases and Prevention",
-        "summary": "Learn about common diseases in dogs and how to prevent them.",
-        "content": "Dogs are susceptible to various diseases, including parvovirus, distemper, and heartworm. Regular vaccinations, parasite control, and preventive medications are essential for disease prevention. Keep your dog's living area clean and provide a balanced diet to support their immune system. Recognize early signs of illness and consult with your vet promptly. With proper care and preventive measures, you can help your dog live a long and healthy life.",
-        "image": "/common-diseases.jpg"
+        "title": "Canine Diseases: Prevention & Early Detection",
+        "summary": "Your comprehensive guide to protecting your dog's health",
+        "content": "**Top 5 Preventable Diseases**\n\n1. **Parvovirus**\n- Symptoms: Lethargy, bloody diarrhea, vomiting\n- Prevention: Vaccine series starting at 6-8 weeks\n\n2. **Heartworm**\n- Transmission: Mosquito bites\n- Testing: Annual blood test\n- Prevention: Monthly chewables (year-round)\n\n3. **Dental Disease**\n- Stages: Plaque → Tartar → Gingivitis → Periodontitis\n- Prevention: Daily brushing, dental chews\n\n**Vaccination Schedule**\n| Age       | Core Vaccines               | Optional Vaccines            |\n|-----------|-----------------------------|------------------------------|\n| 6-8w      | Distemper, Parvo            | Bordetella                   |\n| 10-12w    | Second round                | Leptospirosis                |\n| 14-16w    | Rabies                      | Lyme disease                 |\n| Annually  | Boosters                    | Based on risk                |\n\n**Early Warning Signs**\n🔍 Changes in water consumption\n🔍 Unexplained weight loss/gain\n🔍 Difficulty rising or climbing stairs",
+        "image": "/common-diseases.jpg",
+        "read_time": "9 min",
+        "tags": ["vaccinations", "dog illnesses", "preventive care"]
     },
     {
         "id": 5,
-        "title": "Keeping Your Dog Safe During Fireworks",
-        "summary": "Discover tips to keep your dog safe and calm during fireworks displays.",
-        "content": "Fireworks can be stressful for dogs due to loud noises and bright lights. Keep your dog indoors during fireworks displays to reduce anxiety and prevent them from running away. Create a safe and comfortable space for your dog to retreat to, such as a quiet room with familiar toys and bedding. Consider using calming aids like music or pheromone diffusers to help relax your dog. Ensure your dog is wearing identification tags and is microchipped in case they do escape. With proper preparation, you can help your dog feel secure during fireworks season.",
-        "image": "/fireworks.jpg"
+        "title": "Fireworks Survival Guide for Anxious Dogs",
+        "summary": "Evidence-based strategies to keep your dog calm and safe",
+        "content": "**Pre-Event Preparation**\n\n1. **Create a Safe Space**\n- Soundproof a room with blackout curtains\n- Add white noise (60dB is ideal)\n- Include familiar bedding and worn clothing\n\n2. **Anxiety-Reducing Products**\n- Pressure wraps (Thundershirt)\n- Pheromone diffusers (Adaptil)\n- Prescription meds (for severe cases)\n\n**During the Event**\n- Play specially designed music (Through a Dog's Ear)\n- Use food puzzles for distraction\n- Avoid comforting anxious behavior (reinforces fear)\n\n**Training Protocol**\n1. 2 Months Before:\n   - Play firework sounds at low volume during meals\n2. Gradually increase volume over weeks\n3. Pair sounds with high-value treats\n\n**Emergency Plan**\n✔ Microchip updated contact info\n✔ Recent photos on hand\n✔ ID tags with multiple phone numbers",
+        "image": "/fireworks.jpg",
+        "read_time": "7 min",
+        "tags": ["dog anxiety", "noise phobia", "safety"]
     },
     {
         "id": 6,
-        "title": "Traveling Safely with Your Dog",
-        "summary": "Learn how to travel safely and comfortably with your furry companion.",
-        "content": "Traveling with your dog can be enjoyable with proper planning and preparation. Ensure your dog is comfortable with car rides by gradually introducing them to short trips and providing positive experiences. Use a secure crate or harness to restrain your dog while driving to prevent accidents. Pack essential items such as food, water, medications, and familiar bedding for your dog. Take frequent breaks during long journeys to allow your dog to stretch their legs and relieve themselves. Research pet-friendly accommodations and attractions at your destination. With careful planning, you can create wonderful travel memories with your furry friend.",
-        "image": "/travelling.jpg"
+        "title": "The Ultimate Guide to Traveling with Dogs",
+        "summary": "Everything you need for stress-free adventures",
+        "content": "**Travel Method Comparison**\n\n| Transport  | Pros                      | Cons                     |\n|------------|---------------------------|--------------------------|\n| Car        | Most control              | Motion sickness          |\n| Plane      | Fast for long distances   | Stressful for some dogs  |\n| Train      | Less restrictive          | Limited routes           |\n\n**Packing Checklist**\n📌 Health certificate (required for air travel)\n📌 Collapsible bowls\n📌 First aid kit (vet wrap, antiseptic)\n📌 Copy of vaccination records\n\n**Car Safety Tips**\n- Use crash-tested crates (Sleepy Pod for small dogs)\n- Never allow head out windows (eye damage risk)\n- Stop every 2-3 hours for potty breaks\n\n**Hotel Prep**\n1. Call ahead for pet policies\n2. Bring familiar bedding\n3. Use 'Do Not Disturb' sign to prevent escapes\n\n**Pro Tip:** Practice short trips to build tolerance before long journeys.",
+        "image": "/travelling.jpg",
+        "read_time": "11 min",
+        "tags": ["road trips", "pet travel", "adventure dogs"]
     }
 ]

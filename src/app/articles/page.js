@@ -16,7 +16,7 @@ const ArticlesPage = () => {
                                         <h2 className="text-xl font-semibold text-gray-900 mb-2 mt-2">{article.title}</h2>
                                 </Link>
                                 <p className="text-gray-700">{article.summary}</p>
-                                <Link href='#' className="text-indigo-600 hover:text-indigo-900 font-medium mt-2 block">
+                                <Link href={`articles/${article.id}`} className="text-indigo-600 hover:text-indigo-900 font-medium mt-2 block">
                                   Read more
                                 </Link>
                             </div>

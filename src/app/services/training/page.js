@@ -17,9 +17,11 @@ const DogTrainingPage = () => {
     // Mock data for demonstration
     useEffect(() => {
         const mockData = [
-            { id: 1, name: 'Pawsitive Pooch Academy', description: 'Professional dog training services with certified trainers.', city: 'New York', image: 'https://via.placeholder.com/300' },
-            { id: 2, name: 'K9 Masterminds', description: 'Unlock your dog\'s full potential with our expert trainers.', city: 'Los Angeles', image: 'https://via.placeholder.com/300' },
-            { id: 3, name: 'Top Dog Training Institute', description: 'Tailored training programs to suit your dog\'s unique needs.', city: 'Chicago', image: 'https://via.placeholder.com/300' },
+            { id: 1, name: 'Smart Paws Training Center', description: 'Positive reinforcement training for dogs of all ages.', city: 'Meerut', address: '22 Civil Lines, Meerut, UP 250001', image: 'https://via.placeholder.com/300' },
+            { id: 2, name: 'Happy Tails Academy', description: 'Expert training to improve obedience and agility.', city: 'Muzaffarnagar', address: '14 Gandhi Colony, Muzaffarnagar, UP 251001', image: 'https://via.placeholder.com/300' },
+            { id: 3, name: 'Pawfect Training Hub', description: 'Specialized training programs for behavior correction.', city: 'Saharanpur', address: '5 Court Road, Saharanpur, UP 247001', image: 'https://via.placeholder.com/300' },
+            { id: 7, name: 'Elite Canine Training', description: 'Advan4ed obedience and service dog training.', city: 'Delhi', address: 'Sector 10, Dwarka, Delhi 110075', image: 'https://via.placeholder.com/300' },
+            { id: 5, name: 'TailWaggers Training Academy', description: 'Comprehensive puppy and adult dog training.', city: 'Noida', address: 'Block A, Sector 50, Noida, UP 201301', image: 'https://via.placeholder.com/300' }
         ];
         setDogTrainers(mockData);
         setFilteredTrainers(mockData);
@@ -82,8 +84,9 @@ const DogTrainingPage = () => {
                             <div key={trainer.id} className="bg-white p-6 rounded-lg shadow-md transform transition hover:scale-105 hover:shadow-lg">
                                 <img src={trainer.image} alt={trainer.name} className="w-full h-44 object-cover rounded-lg mb-4" />
                                 <h3 className="md:text-xl text-lg font-semibold text-gray-900 mb-2"><FaDog className="inline-block mr-1" />{trainer.name}</h3>
-                                <p className="text-gray-700 mb-4">{trainer.description}</p>
-                                <p className="text-gray-900 font-medium"><FaMapMarkerAlt className="inline-block mr-1" /><strong>City:</strong> {trainer.city}</p>
+                                <p className="text-gray-700 mb-2">{trainer.description}</p>
+                                <p className="text-gray-900 font-medium"><FaMapMarkerAlt className="inline-block mr-1" /> <strong>City:</strong> {trainer.city}</p>
+                                <p className="text-gray-900 font-medium"><strong>Address:</strong> {trainer.address}</p>
                             </div>
                         ))}
                     </div>
